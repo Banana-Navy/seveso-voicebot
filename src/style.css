@@ -486,8 +486,17 @@ button {
   color: var(--sage);
   font: 700 12px "Manrope", sans-serif;
 }
+.protection-icon {
+  display: block;
+  width: 58px;
+  height: 58px;
+  margin-top: 26px;
+  border-radius: 14px;
+  object-fit: cover;
+  object-position: center top;
+}
 .protection-grid h3 {
-  margin-top: 48px;
+  margin-top: 22px;
 }
 .protection-grid p {
   color: var(--muted);
@@ -1069,6 +1078,15 @@ footer p:last-child {
   }
   .architecture-flow article {
     min-height: 250px;
+  }
+  .protection-icon {
+    width: 48px;
+    height: 48px;
+    margin-top: 18px;
+    border-radius: 12px;
+  }
+  .protection-grid h3 {
+    margin-top: 16px;
   }
   .tech-stack ul {
     grid-template-columns: 1fr;
