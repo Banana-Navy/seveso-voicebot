@@ -137,6 +137,7 @@ function initMotion() {
   requestAnimationFrame(() => document.querySelector('.hero h1')?.classList.add('is-visible'));
 
   const parallaxItems = [...document.querySelectorAll('.hero-art, .hero-art-mobile')];
+  const techBricks = [...document.querySelectorAll('.tech-brick')];
   let ticking = false;
   const updateParallax = () => {
     const hero = document.querySelector('.hero');
@@ -145,6 +146,12 @@ function initMotion() {
     const range = window.innerWidth <= 720 ? 12 : 28;
     const progress = Math.max(-1, Math.min(1, (window.innerHeight / 2 - (rect.top + rect.height / 2)) / window.innerHeight));
     parallaxItems.forEach((item) => item.style.setProperty('--parallax-y', `${progress * range}px`));
+    techBricks.forEach((brick, index) => {
+      const brickRect = brick.getBoundingClientRect();
+      const brickProgress = Math.max(-1, Math.min(1, (window.innerHeight / 2 - (brickRect.top + brickRect.height / 2)) / window.innerHeight));
+      const direction = index % 2 === 0 ? 1 : -1;
+      brick.style.setProperty('--brick-parallax', `${brickProgress * direction * 8}px`);
+    });
     ticking = false;
   };
   window.addEventListener('scroll', () => {
@@ -156,13 +163,3 @@ function initMotion() {
 }
 
 initMotion();
-
-document.querySelectorAll('.tech-links a').forEach((link) => {
-  link.addEventListener('click', () => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
-    document.querySelectorAll('.architecture-flow .is-targeted').forEach((item) => item.classList.remove('is-targeted'));
-    target.classList.add('is-targeted');
-    window.setTimeout(() => target.classList.remove('is-targeted'), 2200);
-  });
-});

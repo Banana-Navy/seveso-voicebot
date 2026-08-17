@@ -552,7 +552,7 @@ button {
   background: rgba(255, 255, 255, 0.66);
   overflow: hidden;
 }
-.tech-links a {
+.tech-brick {
   position: relative;
   z-index: 1;
   min-height: 82px;
@@ -562,8 +562,10 @@ button {
   gap: 12px;
   color: var(--ink);
   text-decoration: none;
+  transform: translate3d(0, var(--brick-parallax, 0), 0);
+  will-change: transform;
 }
-.tech-links a::before {
+.tech-brick::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -572,8 +574,7 @@ button {
   transform: translateX(-102%);
   transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.tech-links a:hover::before,
-.tech-links a:focus-visible::before {
+.tech-links li:hover .tech-brick::before {
   transform: none;
 }
 .tech-links img {
@@ -607,12 +608,10 @@ button {
   font-style: normal;
   transition: transform 0.3s ease;
 }
-.tech-links a:hover img,
-.tech-links a:focus-visible img {
+.tech-links li:hover img {
   transform: scale(1.08) rotate(-2deg);
 }
-.tech-links a:hover em,
-.tech-links a:focus-visible em {
+.tech-links li:hover em {
   transform: translateX(5px);
 }
 .faq {
