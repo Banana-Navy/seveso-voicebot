@@ -100,3 +100,59 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '-30% 0px -60%' });
 sections.forEach((section) => observer.observe(section));
+
+function initMotion() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.documentElement.classList.add('motion-ready');
+
+  const titles = [...document.querySelectorAll('.hero h1, .section h2, .final-cta h2')];
+  const cards = [...document.querySelectorAll('.feature-grid article, .architecture-flow article, .protection-grid article, .tech-stack li, .faq details')];
+  const pills = [...document.querySelectorAll('.proofs > div, .partner-logos img')];
+
+  titles.forEach((element) => element.classList.add('title-reveal'));
+  cards.forEach((element, index) => {
+    element.classList.add('motion-card');
+    element.style.setProperty('--motion-delay', `${(index % 4) * 70}ms`);
+  });
+  pills.forEach((element, index) => {
+    element.classList.add('motion-pill');
+    element.style.setProperty('--motion-delay', `${index * 90}ms`);
+  });
+
+  document.querySelectorAll('.architecture-flow, .protection-grid').forEach((group) => {
+    group.classList.add('bento-stack');
+    [...group.children].forEach((card, index) => card.style.setProperty('--stack-index', index));
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8%', threshold: 0.08 });
+
+  [...titles, ...cards, ...pills].forEach((element) => revealObserver.observe(element));
+  requestAnimationFrame(() => document.querySelector('.hero h1')?.classList.add('is-visible'));
+
+  const parallaxItems = [...document.querySelectorAll('.hero-art, .hero-art-mobile')];
+  let ticking = false;
+  const updateParallax = () => {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    const range = window.innerWidth <= 720 ? 12 : 28;
+    const progress = Math.max(-1, Math.min(1, (window.innerHeight / 2 - (rect.top + rect.height / 2)) / window.innerHeight));
+    parallaxItems.forEach((item) => item.style.setProperty('--parallax-y', `${progress * range}px`));
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateParallax);
+  }, { passive: true });
+  updateParallax();
+}
+
+initMotion();
