@@ -2,13 +2,16 @@ import { Conversation } from '@elevenlabs/client';
 import './style.css';
 
 const AGENT_ID = 'agent_3401kvqnemkfev98yj4xq64tg1xn';
+const DISTRESS_API = 'https://blzyifrmpqrrvurtfgrn.supabase.co/functions/v1/analyze_vocal_distress';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_TYjzQqPTjHbcRp8Tht8tHg_lPMBuaBI';
+const NON_FRENCH_NOTICE = 'Cette démonstration fonctionne uniquement en français. Les options multilingues peuvent être activées dans la version complète sur demande.';
 const FRENCH_ONLY_PROMPT = `
 # Rôle
 Tu es SEVESO Voice, un assistant vocal de démonstration consacré aux accidents industriels en Belgique. Tu aides à comprendre une situation et à suivre les consignes publiques officielles. Tu ne remplaces jamais le 112, un médecin, les secours, BE-Alert ou les autorités.
 
 # Langue
 - Réponds uniquement en français.
-- Si l'utilisateur parle anglais, néerlandais ou demande une autre langue, réponds exactement en français : « Cette démonstration fonctionne uniquement en français. Les options multilingues peuvent être activées dans la version complète sur demande. »
+- Si l'utilisateur parle anglais, néerlandais ou demande une autre langue, réponds exactement en français : « ${NON_FRENCH_NOTICE} »
 - Ne poursuis jamais la conversation dans une autre langue pendant cette démonstration.
 
 # Sources autorisées et exactitude
@@ -45,6 +48,8 @@ const SCENARIOS = {
 };
 let conversation = null;
 let selectedScenario = 'undetermined';
+let inputMeter = null;
+let voiceMetrics = { vadPeak: 0, inputVolumePeak: 0 };
 
 const panel = document.querySelector('.call-panel');
 const startButton = document.querySelector('.panel-call');
@@ -60,6 +65,43 @@ function showCriticalAlert() {
   criticalAlert.hidden = false;
   criticalAlert.querySelector('a').focus({ preventScroll: true });
   conversation?.sendContextualUpdate('ALERTE PRIORITAIRE : des signes de détresse grave ont été détectés. Applique immédiatement le protocole de détresse et demande de raccrocher puis d’appeler le 112. Ne poursuis pas le questionnaire.');
+}
+
+function stopInputMeter() {
+  if (inputMeter) window.clearInterval(inputMeter);
+  inputMeter = null;
+}
+
+function startInputMeter() {
+  stopInputMeter();
+  inputMeter = window.setInterval(() => {
+    if (!conversation) return;
+    const volume = Number(conversation.getInputVolume?.()) || 0;
+    voiceMetrics.inputVolumePeak = Math.max(voiceMetrics.inputVolumePeak, Math.min(1, volume));
+  }, 200);
+}
+
+async function analyzeVocalDistress(transcript) {
+  try {
+    const response = await fetch(DISTRESS_API, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ transcript, audio: voiceMetrics })
+    });
+    if (!response.ok) return;
+    const result = await response.json();
+    if (result.should_interrupt_demo) showCriticalAlert();
+    if (result.detected_language === 'en' || result.detected_language === 'nl') {
+      conversation?.sendContextualUpdate(`LANGUE DE DÉMONSTRATION : réponds maintenant et uniquement en français avec cette phrase exacte : « ${NON_FRENCH_NOTICE} »`);
+    }
+  } catch {
+    // Le détecteur local reste actif si le service externe est momentanément indisponible.
+  } finally {
+    voiceMetrics = { vadPeak: 0, inputVolumePeak: 0 };
+  }
 }
 
 function setPanel(open) {
@@ -94,6 +136,7 @@ document.querySelectorAll('.scenario-picker button').forEach((button) => {
 startButton.addEventListener('click', async () => {
   errorNode.textContent = '';
   criticalAlert.hidden = true;
+  voiceMetrics = { vadPeak: 0, inputVolumePeak: 0 };
   setStatus('connecting');
   try {
     await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -117,12 +160,16 @@ startButton.addEventListener('click', async () => {
         multilingual_enabled: false,
         emergency_transfer_enabled: false
       },
-      onConnect: () => setStatus('connected', 'listening'),
+      onConnect: () => { setStatus('connected', 'listening'); startInputMeter(); },
       onModeChange: ({ mode }) => setStatus('connected', mode),
       onMessage: ({ role, message }) => {
         if (role === 'user' && CRITICAL_DISTRESS.test(message)) showCriticalAlert();
+        if (role === 'user') void analyzeVocalDistress(message);
       },
-      onDisconnect: () => { conversation = null; setStatus('disconnected'); },
+      onVadScore: ({ vadScore }) => {
+        voiceMetrics.vadPeak = Math.max(voiceMetrics.vadPeak, Math.min(1, Number(vadScore) || 0));
+      },
+      onDisconnect: () => { stopInputMeter(); conversation = null; setStatus('disconnected'); },
       onError: (message) => { errorNode.textContent = String(message || 'Connexion impossible. Réessayez.'); setStatus('disconnected'); }
     });
   } catch (error) {
@@ -134,6 +181,7 @@ startButton.addEventListener('click', async () => {
 
 endButton.addEventListener('click', async () => {
   if (conversation) await conversation.endSession();
+  stopInputMeter();
   conversation = null;
   setStatus('disconnected');
 });
