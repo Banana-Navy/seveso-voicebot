@@ -179,6 +179,9 @@ button {
   object-fit: cover;
   object-position: center;
 }
+.hero-art-mobile {
+  display: none;
+}
 .hero-content {
   position: relative;
   z-index: 2;
@@ -431,6 +434,12 @@ button {
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.architecture-flow i img {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 .architecture-flow h3,
 .protection-grid h3 {
@@ -753,7 +762,18 @@ footer p:last-child {
   color: var(--ink);
   font-size: 13px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
   transition: 0.2s;
+}
+.scenario-picker button img {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  border-radius: 9px;
+  object-fit: cover;
 }
 .scenario-picker button:hover,
 .scenario-picker button.selected {
@@ -932,52 +952,51 @@ footer p:last-child {
     box-shadow: 0 8px 22px rgba(42, 59, 50, 0.1);
   }
   .hero {
-    min-height: 1680px;
-    padding-bottom: 0;
+    min-height: 0;
+    height: auto;
+    padding-bottom: 38px;
   }
   .hero-art {
-    height: 760px;
-    top: 790px;
-    bottom: auto;
-    object-position: 67% center;
+    display: none;
+  }
+  .hero-art-mobile {
+    display: block;
+    width: calc(100% + 44px);
+    height: auto;
+    margin: 18px -22px 20px;
+    object-fit: contain;
   }
   .hero:after {
-    background: linear-gradient(
-      180deg,
-      #f3f6ee 0%,
-      rgba(243, 246, 238, 0.97) 42%,
-      rgba(243, 246, 238, 0.18) 62%,
-      rgba(243, 246, 238, 0.35) 84%,
-      #eef3e8 100%
-    );
+    background: linear-gradient(180deg, rgba(243, 246, 238, 0.42), rgba(238, 243, 232, 0.28));
   }
   .hero-content {
     position: relative;
-    padding: 185px 22px 0;
+    padding: 170px 22px 0;
     max-width: none;
   }
   .hero-content > .eyebrow {
     display: none;
   }
   .hero h1 {
-    font-size: clamp(37px, 10.5vw, 45px);
-    line-height: 1.08;
-    letter-spacing: -0.045em;
+    font-size: clamp(28px, 7.8vw, 33px);
+    line-height: 1.07;
+    letter-spacing: -0.04em;
   }
   .hero-copy {
-    font-size: 17px;
-    line-height: 1.55;
-    margin: 26px 0 26px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 20px 0 0;
   }
   .proofs {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 7px;
+    margin: 0 0 22px;
   }
   .proofs > div {
     min-width: 0;
-    min-height: 130px;
-    padding: 18px 8px;
+    min-height: 94px;
+    padding: 12px 6px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -985,32 +1004,30 @@ footer p:last-child {
     border-radius: 17px;
   }
   .proofs svg {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 12px;
+    width: 23px;
+    height: 23px;
+    margin-bottom: 7px;
   }
   .proofs span {
-    font-size: 13px;
+    font-size: 11px;
     line-height: 1.3;
   }
   .hero-actions {
-    position: absolute;
+    position: relative;
     z-index: 3;
-    left: 22px;
-    right: 22px;
-    top: 1510px;
+    inset: auto;
   }
   .button-hero {
     min-width: 0;
     width: 100%;
-    min-height: 64px;
+    min-height: 56px;
     padding: 0 20px;
-    font-size: 15px;
+    font-size: 13px;
   }
   .text-link {
     justify-content: center;
-    margin: 24px 0 0;
-    font-size: 17px;
+    margin: 20px 0 0;
+    font-size: 15px;
   }
   .section {
     padding: 75px 22px;
@@ -1082,7 +1099,18 @@ footer p:last-child {
     padding: 36px 24px;
   }
   .scenario-picker {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .scenario-picker button {
+    min-height: 66px;
+    padding: 7px;
+    gap: 7px;
+    font-size: 11px;
+  }
+  .scenario-picker button img {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
   }
   .call-panel h2 {
     font-size: 32px;
@@ -1112,7 +1140,7 @@ footer p:last-child {
     height: 44px;
   }
   .hero h1 {
-    font-size: 35px;
+    font-size: clamp(27px, 8vw, 29px);
   }
   .proofs span {
     font-size: 11px;
