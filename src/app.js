@@ -1,6 +1,6 @@
 import { Conversation } from '@elevenlabs/client';
 import './style.css';
-import { CRITICAL_DISTRESS, FRENCH_ONLY_PROMPT, NON_FRENCH_INPUT, NON_FRENCH_NOTICE } from './agent-policy.js';
+import { CRITICAL_DISTRESS } from './agent-policy.js';
 
 const AGENT_ID = 'agent_3401kvqnemkfev98yj4xq64tg1xn';
 const DISTRESS_API = 'https://blzyifrmpqrrvurtfgrn.supabase.co/functions/v1/analyze_vocal_distress';
@@ -38,8 +38,6 @@ const safetyMonitor = document.querySelector('.safety-monitor');
 
 const AUDIO_EVENT_LABELS = new Set(['Breathing', 'Wheeze', 'Gasp', 'Pant', 'Cough', 'Throat clearing']);
 const FIXED_AUDIO_URLS = {
-  intro: new URL('audio/intro-fr.mp3', document.baseURI).href,
-  language: new URL('audio/demo-fr-only.mp3', document.baseURI).href,
   emergency: new URL('audio/emergency-112-fr.mp3', document.baseURI).href
 };
 
@@ -186,9 +184,6 @@ async function analyzeVocalDistress(transcript) {
     if (!response.ok) return;
     const result = await response.json();
     if (result.should_interrupt_demo) showCriticalAlert();
-    if (result.detected_language === 'en' || result.detected_language === 'nl') {
-      conversation?.sendContextualUpdate(`LANGUE DE DÉMONSTRATION : réponds maintenant et uniquement en français avec cette phrase exacte : « ${NON_FRENCH_NOTICE} »`);
-    }
   } catch {
     // Le détecteur local reste actif si le service externe est momentanément indisponible.
   } finally {
@@ -237,14 +232,6 @@ startButton.addEventListener('click', async () => {
     conversation = await Conversation.startSession({
       agentId: AGENT_ID,
       connectionType: 'webrtc',
-      overrides: {
-        agent: {
-          language: 'fr'
-        },
-        asr: {
-          keywords: ['SEVESO', 'BE-Alert', '112', 'étouffement', 'suffocation', 'inconscient', 'nuage toxique']
-        }
-      },
       dynamicVariables: {
         preset_scenario: selectedScenario,
         situation_fr: situation.fr,
@@ -252,13 +239,7 @@ startButton.addEventListener('click', async () => {
         multilingual_enabled: false,
         emergency_transfer_enabled: false
       },
-      onConversationCreated: (session) => {
-        conversation = session;
-        session.setVolume({ volume: 0 });
-      },
       onConnect: () => {
-        conversation?.sendContextualUpdate(FRENCH_ONLY_PROMPT, { contextId: 'seveso-safety-policy-v1' });
-        playFixedAudio('intro', 12000);
         setStatus('connected', 'listening');
         startInputMeter();
       },
@@ -266,7 +247,6 @@ startButton.addEventListener('click', async () => {
       onMessage: ({ role, message }) => {
         const critical = role === 'user' && CRITICAL_DISTRESS.test(message);
         if (critical) showCriticalAlert();
-        else if (role === 'user' && NON_FRENCH_INPUT.test(message)) playFixedAudio('language', 9000);
         if (role === 'user') void analyzeVocalDistress(message);
       },
       onVadScore: ({ vadScore }) => {

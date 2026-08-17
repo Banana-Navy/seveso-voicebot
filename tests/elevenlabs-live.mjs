@@ -1,5 +1,4 @@
 import { Conversation } from '@elevenlabs/client';
-import { FRENCH_ONLY_PROMPT } from '../src/agent-policy.js';
 
 const AGENT_ID = 'agent_3401kvqnemkfev98yj4xq64tg1xn';
 const prompt = process.argv.slice(2).join(' ') || 'Bonjour, que dois-je faire si je vois un nuage toxique ?';
@@ -14,7 +13,6 @@ const conversation = await Conversation.startSession({
   agentId: AGENT_ID,
   textOnly: true,
   overrides: {
-    agent: { language: 'fr' },
     conversation: { textOnly: true }
   },
   dynamicVariables: {
@@ -33,7 +31,6 @@ const conversation = await Conversation.startSession({
   onDisconnect: (details) => diagnostics.push({ type: 'disconnect', details })
 });
 
-conversation.sendContextualUpdate(FRENCH_ONLY_PROMPT, { contextId: 'seveso-safety-policy-v1' });
 await new Promise((resolve) => setTimeout(resolve, 2500));
 testing = true;
 conversation.sendUserMessage(prompt);
@@ -43,6 +40,9 @@ const response = await Promise.race([
   new Promise((resolve) => setTimeout(() => resolve(null), 30000))
 ]);
 
-await conversation.endSession().catch(() => {});
+await Promise.race([
+  conversation.endSession().catch(() => {}),
+  new Promise((resolve) => setTimeout(resolve, 3000))
+]);
 console.log(JSON.stringify({ prompt, response, messages, diagnostics }, null, 2));
-if (!response) process.exitCode = 1;
+process.exit(response ? 0 : 1);

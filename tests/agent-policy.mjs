@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import { CRITICAL_DISTRESS, FRENCH_ONLY_PROMPT, NON_FRENCH_INPUT, NON_FRENCH_NOTICE } from '../src/agent-policy.js';
+import { readFile } from 'node:fs/promises';
+import { CRITICAL_DISTRESS, NON_FRENCH_INPUT, NON_FRENCH_NOTICE } from '../src/agent-policy.js';
+
+const agentPrompt = await readFile(new URL('../config/elevenlabs-agent-prompt.md', import.meta.url), 'utf8');
 
 for (const phrase of [
   'Je m étouffe',
@@ -20,9 +23,9 @@ for (const phrase of [
   assert.equal(CRITICAL_DISTRESS.test(phrase), false, `Faux positif : ${phrase}`);
 }
 
-assert.match(FRENCH_ONLY_PROMPT, /Réponds uniquement en français/);
-assert.match(FRENCH_ONLY_PROMPT, /ne peut pas transférer vers le 112/i);
-assert.match(FRENCH_ONLY_PROMPT, new RegExp(NON_FRENCH_NOTICE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+assert.match(agentPrompt, /Réponds uniquement en français/);
+assert.match(agentPrompt, /ne peut pas appeler ni transférer réellement/i);
+assert.match(agentPrompt, new RegExp(NON_FRENCH_NOTICE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 assert.equal(NON_FRENCH_INPUT.test('Hello, can you help me in English?'), true);
 assert.equal(NON_FRENCH_INPUT.test('Hallo, help mij alsjeblieft'), true);
 assert.equal(NON_FRENCH_INPUT.test('Bonjour, pouvez-vous m’aider ?'), false);
