@@ -1,6 +1,6 @@
 import { Conversation } from '@elevenlabs/client';
 import './style.css';
-import { CRITICAL_DISTRESS, FRENCH_ONLY_PROMPT, NON_FRENCH_NOTICE } from './agent-policy.js';
+import { CRITICAL_DISTRESS, FRENCH_ONLY_PROMPT, NON_FRENCH_INPUT, NON_FRENCH_NOTICE } from './agent-policy.js';
 
 const AGENT_ID = 'agent_3401kvqnemkfev98yj4xq64tg1xn';
 const DISTRESS_API = 'https://blzyifrmpqrrvurtfgrn.supabase.co/functions/v1/analyze_vocal_distress';
@@ -23,6 +23,8 @@ let acousticSource = null;
 let acousticProcessor = null;
 let acousticEvents = new Map();
 let voiceMetrics = { vadPeak: 0, inputVolumePeak: 0 };
+let fixedAudio = null;
+let restoreVolumeTimer = null;
 
 const panel = document.querySelector('.call-panel');
 const startButton = document.querySelector('.panel-call');
@@ -35,6 +37,37 @@ const criticalAlert = document.querySelector('.critical-alert');
 const safetyMonitor = document.querySelector('.safety-monitor');
 
 const AUDIO_EVENT_LABELS = new Set(['Breathing', 'Wheeze', 'Gasp', 'Pant', 'Cough', 'Throat clearing']);
+const FIXED_AUDIO_URLS = {
+  intro: new URL('audio/intro-fr.mp3', document.baseURI).href,
+  language: new URL('audio/demo-fr-only.mp3', document.baseURI).href,
+  emergency: new URL('audio/emergency-112-fr.mp3', document.baseURI).href
+};
+
+function stopFixedAudio() {
+  if (restoreVolumeTimer) window.clearTimeout(restoreVolumeTimer);
+  restoreVolumeTimer = null;
+  if (fixedAudio) {
+    fixedAudio.pause();
+    fixedAudio.currentTime = 0;
+  }
+  fixedAudio = null;
+}
+
+function playFixedAudio(kind, muteDuration) {
+  stopFixedAudio();
+  try {
+    conversation?.setVolume({ volume: 0 });
+    fixedAudio = new Audio(FIXED_AUDIO_URLS[kind]);
+    fixedAudio.preload = 'auto';
+    void fixedAudio.play().catch(() => conversation?.setVolume({ volume: 1 }));
+    restoreVolumeTimer = window.setTimeout(() => {
+      conversation?.setVolume({ volume: 1 });
+      stopFixedAudio();
+    }, muteDuration);
+  } catch {
+    conversation?.setVolume({ volume: 1 });
+  }
+}
 
 function setSafetyMonitor(message) {
   if (safetyMonitor) safetyMonitor.lastChild.textContent = message;
@@ -115,6 +148,7 @@ function showCriticalAlert() {
   if (!criticalAlert.hidden) return;
   criticalAlert.hidden = false;
   criticalAlert.querySelector('a').focus({ preventScroll: true });
+  playFixedAudio('emergency', 14000);
   conversation?.sendContextualUpdate('ALERTE PRIORITAIRE : des signes de détresse grave ont été détectés. Applique immédiatement le protocole de détresse et demande de raccrocher puis d’appeler le 112. Ne poursuis pas le questionnaire.');
 }
 
@@ -205,8 +239,7 @@ startButton.addEventListener('click', async () => {
       connectionType: 'webrtc',
       overrides: {
         agent: {
-          language: 'fr',
-          prompt: { prompt: FRENCH_ONLY_PROMPT }
+          language: 'fr'
         },
         asr: {
           keywords: ['SEVESO', 'BE-Alert', '112', 'étouffement', 'suffocation', 'inconscient', 'nuage toxique']
@@ -219,17 +252,28 @@ startButton.addEventListener('click', async () => {
         multilingual_enabled: false,
         emergency_transfer_enabled: false
       },
-      onConnect: () => { setStatus('connected', 'listening'); startInputMeter(); },
+      onConversationCreated: (session) => {
+        conversation = session;
+        session.setVolume({ volume: 0 });
+      },
+      onConnect: () => {
+        conversation?.sendContextualUpdate(FRENCH_ONLY_PROMPT, { contextId: 'seveso-safety-policy-v1' });
+        playFixedAudio('intro', 12000);
+        setStatus('connected', 'listening');
+        startInputMeter();
+      },
       onModeChange: ({ mode }) => setStatus('connected', mode),
       onMessage: ({ role, message }) => {
-        if (role === 'user' && CRITICAL_DISTRESS.test(message)) showCriticalAlert();
+        const critical = role === 'user' && CRITICAL_DISTRESS.test(message);
+        if (critical) showCriticalAlert();
+        else if (role === 'user' && NON_FRENCH_INPUT.test(message)) playFixedAudio('language', 9000);
         if (role === 'user') void analyzeVocalDistress(message);
       },
       onVadScore: ({ vadScore }) => {
         voiceMetrics.vadPeak = Math.max(voiceMetrics.vadPeak, Math.min(1, Number(vadScore) || 0));
       },
-      onDisconnect: () => { stopInputMeter(); void stopAcousticClassifier(); conversation = null; setStatus('disconnected'); },
-      onError: (message) => { errorNode.textContent = String(message || 'Connexion impossible. Réessayez.'); void stopAcousticClassifier(); setStatus('disconnected'); }
+      onDisconnect: () => { stopFixedAudio(); stopInputMeter(); void stopAcousticClassifier(); conversation = null; setStatus('disconnected'); },
+      onError: (message) => { stopFixedAudio(); errorNode.textContent = String(message || 'Connexion impossible. Réessayez.'); void stopAcousticClassifier(); setStatus('disconnected'); }
     });
   } catch (error) {
     await stopAcousticClassifier();
@@ -241,6 +285,7 @@ startButton.addEventListener('click', async () => {
 
 endButton.addEventListener('click', async () => {
   if (conversation) await conversation.endSession();
+  stopFixedAudio();
   stopInputMeter();
   await stopAcousticClassifier();
   conversation = null;

@@ -7,9 +7,9 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 
 const CRITICAL_PATTERNS: Array<[string, RegExp]> = [
-  ["CHOKING", /(je m(?:['’]|\s)+étouffe|il s(?:['’]|\s)+étouffe|elle s(?:['’]|\s)+étouffe|étouffement|suffoque|suffocation|\[choking\])/i],
-  ["RESPIRATORY_DISTRESS", /(je n(?:['’]|\s)+arrive plus à respirer|ne respire plus|impossible de respirer|manque d(?:['’]|\s)+air|\[gasping\])/i],
-  ["LOSS_OF_CONSCIOUSNESS", /(perd(?:re|u)? connaissance|inconscient|inconsciente|je vais m(?:['’]|\s)+évanouir|s(?:['’]|\s)+évanouit)/i],
+  ["CHOKING", /(je m(?:['’]|\s)+étouffe|il s(?:['’]|\s)+étouffe|elle s(?:['’]|\s)+étouffe|étouffement|suffoque|suffocation|i(?:'m| am) choking|ik stik|\[choking\])/i],
+  ["RESPIRATORY_DISTRESS", /(je n(?:['’]|\s)+arrive plus à respirer|ne respire plus|impossible de respirer|manque d(?:['’]|\s)+air|i can(?:not|'t) breathe|ik kan niet ademen|\[gasping\])/i],
+  ["LOSS_OF_CONSCIOUSNESS", /(perd(?:re|u)? connaissance|inconscient|inconsciente|je vais m(?:['’]|\s)+évanouir|s(?:['’]|\s)+évanouit|unconscious|bewusteloos)/i],
 ];
 
 const WARNING_PATTERNS: Array<[string, RegExp]> = [
@@ -78,7 +78,7 @@ Deno.serve(async (req: Request) => {
 
   return json(origin, {
     ok: true,
-    version: "seveso-distress-rules-1.1.0",
+    version: "seveso-distress-rules-1.1.1",
     level,
     reason_codes: [...critical, ...warnings],
     audio_event_codes: concerningAudioEvents,

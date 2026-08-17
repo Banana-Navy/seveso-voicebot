@@ -43,6 +43,14 @@ const semanticAndAcoustic = await analyze('Je n arrive plus à respirer', { audi
 assert.equal(semanticAndAcoustic.level, 'emergency');
 assert.equal(semanticAndAcoustic.acoustic_support, true);
 
+const englishEmergency = await analyze("I can't breathe");
+assert.equal(englishEmergency.level, 'emergency');
+assert.equal(englishEmergency.detected_language, 'en');
+
+const dutchEmergency = await analyze('Ik kan niet ademen');
+assert.equal(dutchEmergency.level, 'emergency');
+assert.equal(dutchEmergency.detected_language, 'nl');
+
 const english = await analyze('Hello, can you help me in English?');
 assert.equal(english.detected_language, 'en');
 
@@ -60,4 +68,4 @@ const rejected = await fetch(endpoint, {
 });
 assert.equal(rejected.status, 403);
 
-console.log('Distress API: 8 scénarios validés.');
+console.log('Distress API: 10 scénarios validés.');
