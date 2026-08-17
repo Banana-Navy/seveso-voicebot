@@ -32,6 +32,26 @@ a {
 button {
   cursor: pointer;
 }
+.demo-alert {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  min-height: 32px;
+  padding: 7px 20px;
+  background: #293438;
+  color: #f5f7f3;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.015em;
+}
+.demo-alert b {
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.demo-alert span {
+  margin: 0 10px;
+  color: #9db59a;
+}
 .site-header {
   height: 110px;
   padding: 0 clamp(28px, 5vw, 78px);
@@ -39,6 +59,7 @@ button {
   align-items: center;
   gap: 38px;
   position: absolute;
+  top: 32px;
   z-index: 10;
   width: 100%;
 }
@@ -439,7 +460,9 @@ footer p:last-child {
 }
 .call-panel section {
   position: relative;
-  width: min(92vw, 480px);
+  width: min(94vw, 640px);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
   background: #f8faf5;
   padding: 42px;
   border-radius: 28px;
@@ -473,6 +496,29 @@ footer p:last-child {
 .panel-copy {
   color: var(--muted);
   line-height: 1.55;
+}
+.scenario-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 20px 0;
+}
+.scenario-picker button {
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+.scenario-picker button:hover,
+.scenario-picker button.selected {
+  border-color: var(--sage);
+  background: #e4ecdf;
+  color: var(--sage-dark);
 }
 .call-state {
   display: flex;
@@ -591,8 +637,17 @@ footer p:last-child {
   }
 }
 @media (max-width: 720px) {
+  .demo-alert {
+    min-height: 48px;
+    padding: 7px 14px;
+    line-height: 1.4;
+  }
+  .demo-alert span {
+    display: none;
+  }
   .site-header {
     padding: 0 20px;
+    top: 48px;
   }
   .brand {
     font-size: 18px;
@@ -621,7 +676,7 @@ footer p:last-child {
     );
   }
   .hero-content {
-    padding: 125px 22px 395px;
+    padding: 170px 22px 395px;
   }
   .hero h1 {
     font-size: 39px;
@@ -694,6 +749,9 @@ footer p:last-child {
   }
   .call-panel section {
     padding: 36px 24px;
+  }
+  .scenario-picker {
+    grid-template-columns: 1fr;
   }
   .call-panel h2 {
     font-size: 32px;

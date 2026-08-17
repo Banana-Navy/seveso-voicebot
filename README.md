@@ -1,6 +1,6 @@
-# Voicebot CVESO
+# Voicebot SEVESO
 
-Landing page et démonstration vocale pour l'assistant CVESO dédié aux risques industriels.
+Landing page et démonstration vocale pour Seveso Voice, assistant multilingue d'aide à la population en situation de crise industrielle.
 
 ## Développement
 
