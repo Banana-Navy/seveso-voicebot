@@ -9,7 +9,7 @@ const ALLOWED_ORIGINS = new Set([
 const CRITICAL_PATTERNS: Array<[string, RegExp]> = [
   ["CHOKING", /(je m(?:['’]|\s)+étouffe|il s(?:['’]|\s)+étouffe|elle s(?:['’]|\s)+étouffe|étouffement|suffoque|suffocation|\[choking\])/i],
   ["RESPIRATORY_DISTRESS", /(je n(?:['’]|\s)+arrive plus à respirer|ne respire plus|impossible de respirer|manque d(?:['’]|\s)+air|\[gasping\])/i],
-  ["LOSS_OF_CONSCIOUSNESS", /(perd connaissance|perdu connaissance|inconscient|inconsciente|je vais m(?:['’]|\s)+évanouir|s(?:['’]|\s)+évanouit)/i],
+  ["LOSS_OF_CONSCIOUSNESS", /(perd(?:re|u)? connaissance|inconscient|inconsciente|je vais m(?:['’]|\s)+évanouir|s(?:['’]|\s)+évanouit)/i],
 ];
 
 const WARNING_PATTERNS: Array<[string, RegExp]> = [
@@ -71,7 +71,7 @@ Deno.serve(async (req: Request) => {
 
   return json(origin, {
     ok: true,
-    version: "seveso-distress-rules-1.0.0",
+    version: "seveso-distress-rules-1.0.1",
     level: emergency ? "emergency" : warnings.length ? "warning" : "none",
     reason_codes: [...critical, ...warnings],
     detected_language: detectedLanguage,

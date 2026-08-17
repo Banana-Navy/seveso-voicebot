@@ -37,7 +37,7 @@ Si les paroles ou la transcription contiennent un signe de détresse respiratoir
 - En cas de doute entre poursuivre et orienter vers le 112, privilégie le 112.
 - Pose une seule question courte à la fois.
 `;
-const CRITICAL_DISTRESS = /(je m(?:['’]|\s)+étouffe|il s(?:['’]|\s)+étouffe|elle s(?:['’]|\s)+étouffe|étouffement|suffoque|suffocation|je n(?:['’]|\s)+arrive plus à respirer|ne respire plus|perd connaissance|perdu connaissance|inconscient|inconsciente|je vais m(?:['’]|\s)+évanouir|s(?:['’]|\s)+évanouit|malaise grave|douleur thoracique|\[coughing\]|\[gasping\]|\[choking\])/i;
+const CRITICAL_DISTRESS = /(je m(?:['’]|\s)+étouffe|il s(?:['’]|\s)+étouffe|elle s(?:['’]|\s)+étouffe|étouffement|suffoque|suffocation|je n(?:['’]|\s)+arrive plus à respirer|ne respire plus|perd(?:re|u)? connaissance|inconscient|inconsciente|je vais m(?:['’]|\s)+évanouir|s(?:['’]|\s)+évanouit|malaise grave|douleur thoracique|\[coughing\]|\[gasping\]|\[choking\])/i;
 const SCENARIOS = {
   toxic_cloud: { fr: 'un nuage toxique ou une fuite de gaz' },
   explosion: { fr: 'une explosion industrielle' },
