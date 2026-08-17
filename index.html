@@ -91,13 +91,13 @@
           <div><p>Seveso Voice combine téléphonie sécurisée, analyse du signal, moteur conversationnel contrôlé et règles déterministes.</p><p>Chaque étape <strong>vérifie la précédente</strong> avant qu'une réponse, un transfert ou une action ne soit autorisé.</p></div>
         </div>
         <div class="architecture-flow" aria-label="Flux technologique en sept étapes">
-          <article><b>01</b><i><svg><use href="#tech-phone"/></svg></i><h3>Entrée télécom</h3><p>Appels et interactions via les canaux officiels de l'organisation.</p><small>SIP, lignes dédiées, numéro officiel</small></article>
-          <article><b>02</b><i><img src="/icons/technology/network-protection.webp" alt="" /></i><h3>Protection réseau</h3><p>Filtrage de la fraude, des surcharges et comportements automatisés.</p><small>SBC, anti-DDoS, contrôle d'admission</small></article>
-          <article><b>03</b><i><img src="/icons/technology/audio-analysis.webp" alt="" /></i><h3>Analyse audio</h3><p>Détection du bruit, des replays, anomalies et signaux suspects.</p><small>Analyse vocale temps réel</small></article>
-          <article><b>04</b><i><img src="/icons/technology/ai-understanding.webp" alt="" /></i><h3>Compréhension métier</h3><p>Langue, intention, contexte SEVESO et sources validées.</p><small>FR · NL · DE · EN</small></article>
-          <article><b>05</b><i><img src="/icons/technology/decision-routing.webp" alt="" /></i><h3>Décision & routage</h3><p>Réponse, escalade 112, transfert humain ou scénario précis.</p><small>Règles, priorités, niveaux de risque</small></article>
-          <article><b>06</b><i><img src="/icons/technology/api-systems.webp" alt="" /></i><h3>Sorties sécurisées</h3><p>Notifications et mises à jour vers les systèmes autorisés.</p><small>CRM, SMS, opérateurs, BE-Alert</small></article>
-          <article><b>07</b><i><img src="/icons/technology/audit-traceability.webp" alt="" /></i><h3>Traçabilité</h3><p>Journalisation des décisions, actions et événements techniques.</p><small>Supervision et audit</small></article>
+          <article id="tech-entry"><b>01</b><i><svg><use href="#tech-phone"/></svg></i><h3>Entrée télécom</h3><p>Appels et interactions via les canaux officiels de l'organisation.</p><small>SIP, lignes dédiées, numéro officiel</small></article>
+          <article id="tech-network"><b>02</b><i><img src="/icons/technology/network-protection.webp" alt="" /></i><h3>Protection réseau</h3><p>Filtrage de la fraude, des surcharges et comportements automatisés.</p><small>SBC, anti-DDoS, contrôle d'admission</small></article>
+          <article id="tech-audio"><b>03</b><i><img src="/icons/technology/audio-analysis.webp" alt="" /></i><h3>Analyse audio</h3><p>Détection du bruit, des replays, anomalies et signaux suspects.</p><small>Analyse vocale temps réel</small></article>
+          <article id="tech-ai"><b>04</b><i><img src="/icons/technology/ai-understanding.webp" alt="" /></i><h3>Compréhension métier</h3><p>Langue, intention, contexte SEVESO et sources validées.</p><small>FR · NL · DE · EN</small></article>
+          <article id="tech-routing"><b>05</b><i><img src="/icons/technology/decision-routing.webp" alt="" /></i><h3>Décision & routage</h3><p>Réponse, escalade 112, transfert humain ou scénario précis.</p><small>Règles, priorités, niveaux de risque</small></article>
+          <article id="tech-api"><b>06</b><i><img src="/icons/technology/api-systems.webp" alt="" /></i><h3>Sorties sécurisées</h3><p>Notifications et mises à jour vers les systèmes autorisés.</p><small>CRM, SMS, opérateurs, BE-Alert</small></article>
+          <article id="tech-audit"><b>07</b><i><img src="/icons/technology/audit-traceability.webp" alt="" /></i><h3>Traçabilité</h3><p>Journalisation des décisions, actions et événements techniques.</p><small>Supervision et audit</small></article>
         </div>
         <div class="protection-heading"><p class="eyebrow">Trois couches de protection</p><h2>Chaque couche protège<br />un endroit différent.</h2><p>Elles ne se remplacent pas : elles se contrôlent. Une défaillance à un niveau reste visible aux autres.</p></div>
         <div class="protection-grid">
@@ -107,7 +107,17 @@
         </div>
         <div class="tech-stack">
           <div><p class="eyebrow">Briques technologiques</p><h2>Une pile modulaire,<br />interopérable et auditable.</h2></div>
-          <ul><li>Téléphonie sécurisée</li><li>Traitement audio temps réel</li><li>Moteur conversationnel vocal</li><li>Base de connaissances contrôlée</li><li>Couche de sécurité parallèle</li><li>Orchestration des workflows</li><li>Interfaces & supervision</li><li>Journalisation & traçabilité</li><li>API sécurisées</li></ul>
+          <ul class="tech-links">
+            <li><a href="#tech-entry"><img src="/icons/benefits/phone-solid.webp" alt="" /><span><b>Téléphonie sécurisée</b><small>Voir l'entrée télécom</small></span><em>→</em></a></li>
+            <li><a href="#tech-audio"><img src="/icons/technology/audio-analysis.webp" alt="" /><span><b>Traitement audio temps réel</b><small>Voir l'analyse du signal</small></span><em>→</em></a></li>
+            <li><a href="#tech-ai"><img src="/icons/technology/ai-understanding.webp" alt="" /><span><b>Moteur conversationnel vocal</b><small>Voir la compréhension métier</small></span><em>→</em></a></li>
+            <li><a href="#tech-ai"><img src="/icons/technology/ai-understanding.webp" alt="" /><span><b>Base de connaissances contrôlée</b><small>Voir les sources validées</small></span><em>→</em></a></li>
+            <li><a href="#tech-network"><img src="/icons/technology/network-protection.webp" alt="" /><span><b>Couche de sécurité parallèle</b><small>Voir la protection réseau</small></span><em>→</em></a></li>
+            <li><a href="#tech-routing"><img src="/icons/technology/decision-routing.webp" alt="" /><span><b>Orchestration des workflows</b><small>Voir la décision et le routage</small></span><em>→</em></a></li>
+            <li><a href="#tech-audit"><img src="/icons/technology/audit-traceability.webp" alt="" /><span><b>Interfaces & supervision</b><small>Voir la supervision</small></span><em>→</em></a></li>
+            <li><a href="#tech-audit"><img src="/icons/technology/audit-traceability.webp" alt="" /><span><b>Journalisation & traçabilité</b><small>Voir la piste d'audit</small></span><em>→</em></a></li>
+            <li><a href="#tech-api"><img src="/icons/technology/api-systems.webp" alt="" /><span><b>API sécurisées</b><small>Voir les systèmes connectés</small></span><em>→</em></a></li>
+          </ul>
         </div>
       </section>
 

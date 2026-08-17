@@ -156,3 +156,13 @@ function initMotion() {
 }
 
 initMotion();
+
+document.querySelectorAll('.tech-links a').forEach((link) => {
+  link.addEventListener('click', () => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    document.querySelectorAll('.architecture-flow .is-targeted').forEach((item) => item.classList.remove('is-targeted'));
+    target.classList.add('is-targeted');
+    window.setTimeout(() => target.classList.remove('is-targeted'), 2200);
+  });
+});
