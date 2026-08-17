@@ -21,6 +21,8 @@ const WARNING_PATTERNS: Array<[string, RegExp]> = [
 
 const ENGLISH_MARKERS = /\b(hello|help me|i can(?:not|'t) breathe|english|please help|what should i do)\b/i;
 const DUTCH_MARKERS = /\b(hallo|help mij|ik kan niet ademen|nederlands|wat moet ik doen|alsjeblieft)\b/i;
+const ALLOWED_AUDIO_EVENTS = new Set(["Breathing", "Wheeze", "Gasp", "Pant", "Cough", "Throat clearing"]);
+const CONCERNING_AUDIO_EVENTS = new Set(["Wheeze", "Gasp", "Pant", "Cough"]);
 
 function cors(origin: string | null): HeadersInit {
   const allowed = origin && ALLOWED_ORIGINS.has(origin) ? origin : "https://banana-navy.github.io";
@@ -66,20 +68,26 @@ Deno.serve(async (req: Request) => {
   const audio = body.audio && typeof body.audio === "object" ? body.audio as Record<string, unknown> : {};
   const vadPeak = Math.max(0, Math.min(1, Number(audio.vad_peak) || 0));
   const inputVolumePeak = Math.max(0, Math.min(1, Number(audio.input_volume_peak) || 0));
-  const acousticSupport = critical.length > 0 && (vadPeak >= 0.65 || inputVolumePeak >= 0.35);
+  const audioEvents = Array.isArray(audio.audio_events)
+    ? [...new Set(audio.audio_events.map(String).filter((event) => ALLOWED_AUDIO_EVENTS.has(event)))].slice(0, 6)
+    : [];
+  const concerningAudioEvents = audioEvents.filter((event) => CONCERNING_AUDIO_EVENTS.has(event));
+  const acousticSupport = critical.length > 0 && (vadPeak >= 0.65 || inputVolumePeak >= 0.35 || concerningAudioEvents.length > 0);
   const emergency = critical.length > 0;
+  const level = emergency ? "emergency" : warnings.length || concerningAudioEvents.length ? "warning" : "none";
 
   return json(origin, {
     ok: true,
-    version: "seveso-distress-rules-1.0.1",
-    level: emergency ? "emergency" : warnings.length ? "warning" : "none",
+    version: "seveso-distress-rules-1.1.0",
+    level,
     reason_codes: [...critical, ...warnings],
+    audio_event_codes: concerningAudioEvents,
     detected_language: detectedLanguage,
     acoustic_support: acousticSupport,
     should_interrupt_demo: emergency,
     instruction: emergency
       ? "Votre état peut être grave. Raccrochez maintenant et appelez immédiatement le 112, ou demandez à une personne près de vous de le faire. Cette démonstration ne peut pas transférer l'appel."
       : null,
-    limitations: "Évaluation déterministe de signaux déclarés ou transcrits. Aucun diagnostic médical.",
+    limitations: "Évaluation déterministe de signaux déclarés ou transcrits. Les événements acoustiques ne déclenchent jamais seuls une urgence. Aucun diagnostic médical.",
   });
 });

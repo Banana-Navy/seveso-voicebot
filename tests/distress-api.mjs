@@ -34,6 +34,15 @@ const ordinary = await analyze('Je vois un nuage toxique au-dessus de l’usine'
 assert.equal(ordinary.level, 'none');
 assert.equal(ordinary.should_interrupt_demo, false);
 
+const acousticOnly = await analyze('Je ne sais pas quoi faire', { audio_events: ['Gasp'] });
+assert.equal(acousticOnly.level, 'warning');
+assert.equal(acousticOnly.should_interrupt_demo, false);
+assert.deepEqual(acousticOnly.audio_event_codes, ['Gasp']);
+
+const semanticAndAcoustic = await analyze('Je n arrive plus à respirer', { audio_events: ['Gasp'] });
+assert.equal(semanticAndAcoustic.level, 'emergency');
+assert.equal(semanticAndAcoustic.acoustic_support, true);
+
 const english = await analyze('Hello, can you help me in English?');
 assert.equal(english.detected_language, 'en');
 
@@ -51,4 +60,4 @@ const rejected = await fetch(endpoint, {
 });
 assert.equal(rejected.status, 403);
 
-console.log('Distress API: 6 scénarios validés.');
+console.log('Distress API: 8 scénarios validés.');
