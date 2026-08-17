@@ -906,6 +906,49 @@ footer p:last-child {
   font-size: 13px;
   min-height: 18px;
 }
+.critical-alert {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 2px solid #b8473f;
+  border-radius: 14px;
+  background: #fff0ed;
+  color: #6f211c;
+}
+.safety-monitor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.safety-monitor span {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #789674;
+  box-shadow: 0 0 0 4px rgba(120, 150, 116, 0.14);
+}
+.critical-alert strong {
+  font: 800 16px "Manrope", sans-serif;
+}
+.critical-alert span {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.critical-alert a {
+  min-height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #b63730;
+  color: white;
+  font-weight: 800;
+  text-decoration: none;
+}
 .emergency-note {
   border-top: 1px solid var(--line);
   padding-top: 18px;

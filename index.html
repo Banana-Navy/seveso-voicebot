@@ -64,7 +64,7 @@
       <section class="section intro" id="pourquoi">
         <p class="eyebrow">Toujours disponible. Toujours clair.</p>
         <h2>Quand chaque seconde compte,<br />la bonne information doit circuler.</h2>
-        <p>SEVESO complète les dispositifs officiels avec une interface vocale simple, immédiate et multilingue en français, néerlandais, allemand et anglais. Il ne remplace jamais les services d'urgence.</p>
+        <p>SEVESO complète les dispositifs officiels avec une interface vocale simple et immédiate. Cette démonstration fonctionne uniquement en français ; les langues supplémentaires peuvent être activées dans la version complète. Il ne remplace jamais les services d'urgence.</p>
       </section>
 
       <section class="section features" id="fonctionnalites">
@@ -72,7 +72,7 @@
         <div class="feature-grid">
           <article><span>01</span><h3>Réponse immédiate</h3><p>Une conversation naturelle pour qualifier la situation et fournir les premières consignes sans parcourir un manuel.</p></article>
           <article><span>02</span><h3>Scénarios industriels</h3><p>Nuage toxique, fuite de gaz, incendie, explosion, pollution ou évacuation préventive.</p></article>
-          <article><span>03</span><h3>Guidage multilingue</h3><p>Une assistance accessible en français, néerlandais, allemand et anglais pour la population et les équipes de terrain.</p></article>
+          <article><span>03</span><h3>Français pour la démo</h3><p>La version présentée répond uniquement en français. Le multilingue reste une option activable dans la version complète.</p></article>
         </div>
       </section>
 
@@ -80,7 +80,7 @@
         <div class="how-copy"><p class="eyebrow">Simple par nature</p><h2>Une conversation,<br />trois étapes.</h2><p>SEVESO transforme une situation confuse en prochaines actions claires, tout en rappelant systématiquement quand appeler le 112.</p><button class="button call-trigger">Tester le voicebot <span>→</span></button></div>
         <ol>
           <li><b>01</b><div><h3>Vous lancez l'appel</h3><p>Depuis un ordinateur ou un smartphone, sans installer d'application.</p></div></li>
-          <li><b>02</b><div><h3>Vous décrivez la situation</h3><p>Le bot écoute, pose les questions utiles et adapte la langue.</p></div></li>
+          <li><b>02</b><div><h3>Vous décrivez la situation</h3><p>Le bot écoute en français et pose une question courte à la fois.</p></div></li>
           <li><b>03</b><div><h3>Vous êtes guidé</h3><p>Les consignes pertinentes sont formulées clairement, étape par étape.</p></div></li>
         </ol>
       </section>
@@ -95,7 +95,7 @@
           <article id="tech-network"><b>02</b><i><img src="/icons/technology/network-protection.webp" alt="" /></i><h3>Protection réseau</h3><p>Filtrage de la fraude, des surcharges et comportements automatisés.</p><small>SBC, anti-DDoS, contrôle d'admission</small></article>
           <article id="tech-audio"><b>03</b><i><img src="/icons/technology/audio-analysis.webp" alt="" /></i><h3>Analyse audio</h3><p>Détection du bruit, des replays, anomalies et signaux suspects.</p><small>Analyse vocale temps réel</small></article>
           <article id="tech-ai"><b>04</b><i><img src="/icons/technology/ai-understanding.webp" alt="" /></i><h3>Compréhension métier</h3><p>Langue, intention, contexte SEVESO et sources validées.</p><small>FR · NL · DE · EN</small></article>
-          <article id="tech-routing"><b>05</b><i><img src="/icons/technology/decision-routing.webp" alt="" /></i><h3>Décision & routage</h3><p>Réponse, escalade 112, transfert humain ou scénario précis.</p><small>Règles, priorités, niveaux de risque</small></article>
+          <article id="tech-routing"><b>05</b><i><img src="/icons/technology/decision-routing.webp" alt="" /></i><h3>Décision & routage</h3><p>Réponse, consigne d'appel au 112 ou scénario précis. Le transfert est désactivé dans la démo.</p><small>Règles, priorités, niveaux de risque</small></article>
           <article id="tech-api"><b>06</b><i><img src="/icons/technology/api-systems.webp" alt="" /></i><h3>Sorties sécurisées</h3><p>Notifications et mises à jour vers les systèmes autorisés.</p><small>CRM, SMS, opérateurs, BE-Alert</small></article>
           <article id="tech-audit"><b>07</b><i><img src="/icons/technology/audit-traceability.webp" alt="" /></i><h3>Traçabilité</h3><p>Journalisation des décisions, actions et événements techniques.</p><small>Supervision et audit</small></article>
         </div>
@@ -159,6 +159,12 @@
           <button class="selected" data-scenario="undetermined"><img src="/icons/scenarios/undetermined.webp" alt="" /><span>Situation indéterminée</span></button>
         </div>
         <div class="call-state"><div class="orb"><span></span><i></i></div><strong>Prêt à démarrer</strong><small>Cliquez pour autoriser le microphone</small></div>
+        <p class="safety-monitor"><span></span>Détection sémantique de détresse activée — fonction expérimentale</p>
+        <div class="critical-alert" role="alert" hidden>
+          <strong>Votre état peut être grave.</strong>
+          <span>Raccrochez cette démonstration et appelez immédiatement les secours.</span>
+          <a href="tel:112">Appeler le 112</a>
+        </div>
         <button class="button panel-call">Démarrer la conversation</button>
         <button class="button panel-end" hidden>Terminer l'appel</button>
         <p class="call-error" role="alert"></p>
