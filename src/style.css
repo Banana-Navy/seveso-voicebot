@@ -896,43 +896,78 @@ footer p:last-child {
     display: none;
   }
   .site-header {
-    padding: 0 20px;
+    height: 104px;
+    padding: 0 18px;
     top: 48px;
+    gap: 10px;
   }
   .brand {
-    font-size: 18px;
+    font-size: 19px;
+    gap: 9px;
   }
   .brand-mark {
-    width: 42px;
+    width: 48px;
   }
   .site-header > .button {
-    display: none;
+    display: inline-flex;
+    order: 2;
+    min-height: 48px;
+    margin-left: auto;
+    padding: 0 15px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .site-header > .button svg {
+    width: 20px;
+  }
+  .menu-toggle {
+    order: 3;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    margin-left: 0;
+    padding: 14px 11px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 8px 22px rgba(42, 59, 50, 0.1);
   }
   .hero {
-    min-height: 920px;
+    min-height: 1680px;
     padding-bottom: 0;
   }
   .hero-art {
-    height: 48%;
-    top: auto;
-    object-position: 65% bottom;
+    height: 760px;
+    top: 790px;
+    bottom: auto;
+    object-position: 67% center;
   }
   .hero:after {
     background: linear-gradient(
       180deg,
       #f3f6ee 0%,
-      rgba(243, 246, 238, 0.96) 58%,
-      rgba(243, 246, 238, 0.2) 82%
+      rgba(243, 246, 238, 0.97) 42%,
+      rgba(243, 246, 238, 0.18) 62%,
+      rgba(243, 246, 238, 0.35) 84%,
+      #eef3e8 100%
     );
   }
   .hero-content {
-    padding: 170px 22px 395px;
+    position: relative;
+    padding: 185px 22px 0;
+    max-width: none;
+  }
+  .hero-content > .eyebrow {
+    display: none;
   }
   .hero h1 {
-    font-size: 39px;
+    font-size: clamp(37px, 10.5vw, 45px);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
   }
   .hero-copy {
     font-size: 17px;
+    line-height: 1.55;
+    margin: 26px 0 26px;
   }
   .proofs {
     display: grid;
@@ -941,24 +976,41 @@ footer p:last-child {
   }
   .proofs > div {
     min-width: 0;
-    padding: 12px 7px;
-    display: block;
+    min-height: 130px;
+    padding: 18px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 17px;
   }
   .proofs svg {
-    width: 22px;
-    margin-bottom: 7px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 12px;
   }
   .proofs span {
-    font-size: 11px;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .hero-actions {
+    position: absolute;
+    z-index: 3;
+    left: 22px;
+    right: 22px;
+    top: 1510px;
   }
   .button-hero {
     min-width: 0;
     width: 100%;
-    padding: 0 18px;
-    font-size: 14px;
+    min-height: 64px;
+    padding: 0 20px;
+    font-size: 15px;
   }
   .text-link {
-    margin-left: 15px;
+    justify-content: center;
+    margin: 24px 0 0;
+    font-size: 17px;
   }
   .section {
     padding: 75px 22px;
@@ -1034,5 +1086,35 @@ footer p:last-child {
   }
   .call-panel h2 {
     font-size: 32px;
+  }
+}
+@media (max-width: 380px) {
+  .site-header {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 8px;
+  }
+  .brand {
+    font-size: 16px;
+  }
+  .brand-mark {
+    width: 42px;
+  }
+  .site-header > .button {
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 11px;
+    gap: 7px;
+  }
+  .menu-toggle {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+  .hero h1 {
+    font-size: 35px;
+  }
+  .proofs span {
+    font-size: 11px;
   }
 }
