@@ -239,6 +239,12 @@ button {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+.proofs img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  object-position: center top;
+}
 .proofs span {
   font-size: 13px;
   line-height: 1.35;
@@ -963,7 +969,7 @@ footer p:last-child {
     display: block;
     width: calc(100% + 44px);
     height: auto;
-    margin: 18px -22px 20px;
+    margin: 4px -22px 10px;
     object-fit: contain;
   }
   .hero:after {
@@ -971,7 +977,7 @@ footer p:last-child {
   }
   .hero-content {
     position: relative;
-    padding: 170px 22px 0;
+    padding: 154px 22px 0;
     max-width: none;
   }
   .hero-content > .eyebrow {
@@ -991,12 +997,12 @@ footer p:last-child {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 7px;
-    margin: 0 0 22px;
+    margin: 0 0 16px;
   }
   .proofs > div {
     min-width: 0;
-    min-height: 94px;
-    padding: 12px 6px;
+    min-height: 78px;
+    padding: 8px 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1007,6 +1013,11 @@ footer p:last-child {
     width: 23px;
     height: 23px;
     margin-bottom: 7px;
+  }
+  .proofs img {
+    width: 21px;
+    height: 21px;
+    margin-bottom: 5px;
   }
   .proofs span {
     font-size: 11px;
@@ -1020,13 +1031,13 @@ footer p:last-child {
   .button-hero {
     min-width: 0;
     width: 100%;
-    min-height: 56px;
-    padding: 0 20px;
-    font-size: 13px;
+    min-height: 62px;
+    padding: 0 16px;
+    font-size: 15px;
   }
   .text-link {
     justify-content: center;
-    margin: 20px 0 0;
+    margin: 14px 0 0;
     font-size: 15px;
   }
   .section {
