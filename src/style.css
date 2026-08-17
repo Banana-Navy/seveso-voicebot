@@ -359,6 +359,172 @@ button {
 .how li h3 {
   margin: 0 0 8px;
 }
+.svg-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.technology {
+  background: #202b2e;
+  color: #f5f7f3;
+  padding-bottom: 0;
+}
+.technology .eyebrow {
+  color: #a9c1a4;
+}
+.technology-hero {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 10vw;
+  align-items: end;
+  margin-bottom: 70px;
+}
+.technology-hero h2 span {
+  color: #9db59a;
+}
+.technology-hero > div:last-child {
+  color: #cbd3cf;
+  font-size: 18px;
+  line-height: 1.65;
+}
+.technology-hero strong {
+  color: white;
+}
+.architecture-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.architecture-flow article {
+  position: relative;
+  min-height: 290px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+}
+.architecture-flow article:last-child {
+  grid-column: span 2;
+}
+.architecture-flow article > b {
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  color: #799174;
+  font-size: 12px;
+}
+.architecture-flow i {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #dfeadd;
+  color: #526c5d;
+}
+.architecture-flow svg {
+  width: 27px;
+  height: 27px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.architecture-flow h3,
+.protection-grid h3 {
+  font: 700 20px "Manrope", sans-serif;
+  margin: 35px 0 10px;
+}
+.architecture-flow p {
+  color: #bfc9c4;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+.architecture-flow small {
+  color: #91a39a;
+  font-size: 11px;
+}
+.protection-heading {
+  max-width: 800px;
+  margin: 120px 0 50px;
+}
+.protection-heading > p:last-child {
+  color: #bac5bf;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 650px;
+}
+.protection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.protection-grid article {
+  background: #f0f4ec;
+  color: var(--ink);
+  border-radius: 20px;
+  padding: 32px;
+}
+.protection-grid article > span {
+  color: var(--sage);
+  font: 700 12px "Manrope", sans-serif;
+}
+.protection-grid h3 {
+  margin-top: 48px;
+}
+.protection-grid p {
+  color: var(--muted);
+}
+.protection-grid ul,
+.commitments {
+  list-style: none;
+  padding: 0;
+  margin: 25px 0 0;
+}
+.protection-grid li,
+.commitments li {
+  position: relative;
+  padding: 10px 0 10px 22px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.protection-grid li:before,
+.commitments li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--sage);
+  font-weight: 800;
+}
+.tech-stack {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 8vw;
+  margin: 120px calc(-1 * clamp(28px, 7vw, 110px)) 0;
+  padding: 90px clamp(28px, 7vw, 110px);
+  background: #dfe8da;
+  color: var(--ink);
+}
+.tech-stack .eyebrow {
+  color: var(--sage-dark);
+}
+.tech-stack ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tech-stack li {
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.66);
+  font-weight: 700;
+  font-size: 14px;
+}
 .faq {
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
@@ -421,6 +587,82 @@ footer {
   align-items: end;
   gap: 40px;
   padding: 55px clamp(28px, 7vw, 110px);
+}
+.bn-footer {
+  display: block;
+  padding: 0;
+  background: #192326;
+}
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 0.8fr;
+  gap: 8vw;
+  padding: 75px clamp(28px, 7vw, 110px);
+}
+.footer-main h2,
+.partner-block h2 {
+  margin: 0 0 23px;
+  color: #f5f7f3;
+  font: 700 17px "Manrope", sans-serif;
+}
+.footer-company img {
+  width: 150px;
+  height: auto;
+  filter: grayscale(1) brightness(2.4);
+  object-fit: contain;
+  object-position: left;
+  margin-bottom: 12px;
+}
+.footer-company p:nth-of-type(1) {
+  color: white;
+  font: 700 24px/1.2 "Manrope", sans-serif;
+  margin-bottom: 22px;
+}
+.footer-company p,
+.footer-contact p,
+.partner-block p {
+  color: #aebbb5;
+  line-height: 1.6;
+  text-align: left;
+}
+.footer-contact a {
+  color: #dce6d9;
+  text-decoration: none;
+}
+.commitments li {
+  color: #d3ddd8;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.partner-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8vw;
+  align-items: center;
+  padding: 45px clamp(28px, 7vw, 110px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.partner-logos {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+}
+.partner-logos img {
+  width: auto;
+  max-width: 115px;
+  height: 58px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.78;
+}
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 25px clamp(28px, 7vw, 110px);
+  color: #83918a;
+  font-size: 11px;
 }
 .footer-brand {
   color: white;
@@ -635,6 +877,15 @@ footer p:last-child {
   .feature-grid h3 {
     margin-top: 38px;
   }
+  .architecture-flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .architecture-flow article:last-child {
+    grid-column: auto;
+  }
+  .footer-main {
+    gap: 4vw;
+  }
 }
 @media (max-width: 720px) {
   .demo-alert {
@@ -726,6 +977,35 @@ footer p:last-child {
   .how,
   .faq {
     grid-template-columns: 1fr;
+  }
+  .technology-hero,
+  .protection-grid,
+  .tech-stack,
+  .footer-main,
+  .partner-block {
+    grid-template-columns: 1fr;
+  }
+  .architecture-flow {
+    grid-template-columns: 1fr;
+  }
+  .architecture-flow article {
+    min-height: 250px;
+  }
+  .tech-stack ul {
+    grid-template-columns: 1fr;
+  }
+  .tech-stack {
+    margin-left: -22px;
+    margin-right: -22px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .partner-logos {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .footer-bottom {
+    flex-direction: column;
   }
   .how ol {
     margin-top: 50px;
