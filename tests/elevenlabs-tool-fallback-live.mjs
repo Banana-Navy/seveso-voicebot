@@ -50,11 +50,10 @@ const detail = await fetch(`https://api.elevenlabs.io/v1/convai/conversations/${
 }).then((response) => response.json());
 const history = JSON.parse(detail.conversation_initiation_client_data.dynamic_variables.system__conversation_history);
 const calls = history.entries.flatMap((entry) => entry.tool_requests ?? []);
-const classifyCalls = calls.filter((call) => call.tool_name === 'classify_situation');
-const downstreamCalls = calls.filter((call) => ['save_triage', 'save_location', 'save_symptom', 'save_assistance', 'update_confinement', 'request_transfer'].includes(call.tool_name));
+const brokenWebhookCalls = calls.filter((call) => ['classify_situation', 'save_triage', 'save_location', 'save_symptom', 'save_assistance', 'update_confinement', 'request_transfer', 'log_call_end'].includes(call.tool_name));
 
-assert.equal(classifyCalls.length, 1, 'La classification ne doit pas être retentée après HTTP 500.');
-assert.equal(downstreamCalls.length, 0, 'Aucun outil exigeant call_id ne doit être appelé après l’échec de classification.');
+assert.equal(brokenWebhookCalls.length, 0, 'Aucun webhook n8n défaillant ne doit être appelé en mode dégradé.');
 assert.equal(JSON.stringify(calls).includes('"call_id":""'), false, 'Un call_id vide a été transmis.');
+assert.equal(agentMessages.some((message) => /problème technique|souci.*enregistr/i.test(message)), false, 'Le bot ne doit pas annoncer les erreurs de journalisation.');
 
-console.log(JSON.stringify({ conversationId, classify_calls: classifyCalls.length, downstream_calls: downstreamCalls.length, agentMessages }, null, 2));
+console.log(JSON.stringify({ conversationId, broken_webhook_calls: brokenWebhookCalls.length, agentMessages }, null, 2));

@@ -23,9 +23,11 @@ assert.equal(config.turn.merge_with_default_ignore_terms, true);
 assert.deepEqual(config.turn.interruption_ignore_term_languages, ['fr']);
 assert.equal(config.vad.background_voice_detection, false);
 assert.equal(config.tts.voice_id, settings.voice.voice_id);
-assert.equal(config.tts.model_id, 'eleven_flash_v2_5');
+assert.equal(config.tts.model_id, settings.voice.model_id);
 assert.equal(config.tts.speed, settings.voice.speed);
 assert.equal(config.tts.stability, settings.voice.stability);
+assert.equal(config.tts.expressive_mode, true);
+assert.deepEqual(config.agent.prompt.tool_ids, settings.active_tool_ids);
 
 for (const required of ['Voicebot SEVESO', 'version de démonstration', 'incidents industriels', 'enregistré', 'Pour quelle situation appelez-vous']) {
   assert.ok(config.agent.first_message.includes(required), `Introduction incomplète : ${required}`);

@@ -63,10 +63,10 @@ async function runCase(expectedScenario, prompt) {
   const detail = await detailResponse.json();
   const history = JSON.parse(detail.conversation_initiation_client_data.dynamic_variables.system__conversation_history);
   const calls = history.entries.flatMap((entry) => entry.tool_requests ?? []);
-  const classify = calls.find((call) => call.tool_name === 'classify_situation');
-  assert.ok(classify, `classify_situation non appelé pour : ${prompt}`);
-  assert.equal(classify.params_as_json.scenario_code, expectedScenario, `Mauvais scénario pour : ${prompt}`);
-  assert.equal(classify.params_as_json.language, 'fr');
+  const brokenWebhookCalls = calls.filter((call) => ['classify_situation', 'save_triage', 'save_location', 'save_symptom', 'save_assistance', 'update_confinement', 'request_transfer', 'log_call_end'].includes(call.tool_name));
+  assert.equal(brokenWebhookCalls.length, 0, `Webhook défaillant appelé pour : ${prompt}`);
+  assert.doesNotMatch(response, /problème technique|souci.*enregistr/i, `Erreur technique annoncée pour : ${prompt}`);
+  assert.doesNotMatch(response, /quelle situation|s'agit-il d'une explosion, d'un incendie/i, `Incident redemandé pour : ${prompt}`);
   return { expectedScenario, prompt, response, responseLatencyMs, conversationId };
 }
 

@@ -23,7 +23,7 @@ const response = await fetch(`https://api.elevenlabs.io/v1/convai/agents/${setti
         similarity_boost: settings.voice.similarity_boost,
         speed: settings.voice.speed,
         optimize_streaming_latency: settings.voice.optimize_streaming_latency,
-        expressive_mode: false
+        expressive_mode: true
       },
       vad: settings.vad,
       language_presets: {},
@@ -31,7 +31,10 @@ const response = await fetch(`https://api.elevenlabs.io/v1/convai/agents/${setti
         language: 'fr',
         first_message: settings.first_message,
         disable_first_message_interruptions: true,
-        prompt: { prompt }
+        prompt: {
+          prompt,
+          tool_ids: settings.active_tool_ids
+        }
       }
     }
   })
@@ -53,6 +56,7 @@ console.log(JSON.stringify({
     speed: config.tts.speed,
     stability: config.tts.stability
   },
+  active_tool_ids: config.agent.prompt.tool_ids,
   turn: {
     model: config.turn.turn_model,
     eagerness: config.turn.turn_eagerness,

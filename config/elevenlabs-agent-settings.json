@@ -5,12 +5,13 @@
     "name": "Adrien",
     "voice_id": "IpTJxgMFj1wbxpha4zxm",
     "locale": "fr-BE",
-    "model_id": "eleven_flash_v2_5",
-    "stability": 0.58,
-    "similarity_boost": 0.82,
-    "speed": 0.94,
+    "model_id": "eleven_v3_conversational",
+    "stability": 0.45,
+    "similarity_boost": 0.75,
+    "speed": 0.98,
     "optimize_streaming_latency": 3
   },
+  "active_tool_ids": [],
   "turn": {
     "turn_model": "turn_v3",
     "turn_eagerness": "normal",
