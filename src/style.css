@@ -137,6 +137,34 @@ button {
   padding: 0 24px;
   white-space: nowrap;
 }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-phone {
+  min-height: 50px;
+  padding: 0 18px;
+  border: 1px solid rgba(96, 125, 107, 0.32);
+  border-radius: 999px;
+  color: var(--sage-dark);
+  background: rgba(255, 255, 255, 0.68);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+.header-phone svg {
+  width: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .phone-icon {
   font-size: 25px;
   transform: rotate(-45deg);
@@ -249,14 +277,45 @@ button {
   font-size: 13px;
   line-height: 1.35;
 }
+.access-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: min(650px, calc(100vw - 60px));
+}
 .button-hero {
+  min-width: 0;
+  min-height: 68px;
+  padding: 0 20px;
+  font-size: 15px;
+  text-transform: none;
+  text-decoration: none;
+}
+.button-hero > span:not(.arrow) {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.12;
+  text-align: left;
+}
+.button-hero small {
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.78;
   text-transform: uppercase;
-  min-width: 410px;
-  font-size: 17px;
 }
 .button-hero .arrow {
-  font-size: 30px;
+  font-size: 25px;
   margin-left: auto;
+}
+.button-phone {
+  border: 1px solid rgba(96, 125, 107, 0.3);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--sage-dark);
+  box-shadow: 0 11px 24px rgba(76, 105, 83, 0.12);
 }
 .text-link {
   display: flex;
@@ -347,6 +406,14 @@ button {
   line-height: 1.6;
   max-width: 500px;
   margin: 25px 0 35px;
+}
+.how-phone {
+  display: block;
+  width: fit-content;
+  margin-top: 18px;
+  color: var(--sage-dark);
+  font-weight: 800;
+  text-underline-offset: 4px;
 }
 .how ol {
   list-style: none;
@@ -668,6 +735,17 @@ details p {
   color: var(--sage-dark);
   box-shadow: none;
 }
+.final-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.button-outline-light {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: transparent;
+  box-shadow: none;
+  text-decoration: none;
+}
 footer {
   background: #1f2a2d;
   color: white;
@@ -717,6 +795,14 @@ footer {
 .footer-contact a {
   color: #3e5f4d;
   text-decoration: none;
+}
+.footer-voice-number {
+  display: inline-block;
+  font: 800 23px "Manrope", sans-serif;
+  letter-spacing: -0.03em;
+}
+.footer-contact-title {
+  margin-top: 34px !important;
 }
 .commitments li {
   color: #35413c;
@@ -1061,9 +1147,9 @@ footer p:last-child {
     transform: none !important;
   }
 }
-@media (max-width: 1080px) {
-  .site-header {
-    height: 90px;
+@media (max-width: 1320px) {
+  .header-actions {
+    margin-left: auto;
   }
   .nav {
     display: none;
@@ -1082,8 +1168,9 @@ footer p:last-child {
   }
   .menu-toggle {
     display: flex;
-    margin-left: auto;
+    order: 3;
     width: 32px;
+    flex: 0 0 32px;
     flex-direction: column;
     gap: 5px;
   }
@@ -1091,6 +1178,11 @@ footer p:last-child {
     height: 2px;
     background: var(--ink);
     width: 100%;
+  }
+}
+@media (max-width: 1080px) {
+  .site-header {
+    height: 90px;
   }
   .hero {
     height: auto;
@@ -1125,6 +1217,14 @@ footer p:last-child {
   .footer-main {
     gap: 4vw;
   }
+  .header-phone span {
+    display: none;
+  }
+  .header-phone {
+    width: 50px;
+    padding: 0;
+    justify-content: center;
+  }
 }
 @media (max-width: 720px) {
   .demo-alert {
@@ -1148,17 +1248,31 @@ footer p:last-child {
   .brand-mark {
     width: 48px;
   }
-  .site-header > .button {
-    display: inline-flex;
+  .header-actions {
     order: 2;
-    min-height: 48px;
     margin-left: auto;
+    gap: 6px;
+  }
+  .header-actions > .button {
+    display: inline-flex;
+    min-height: 48px;
     padding: 0 15px;
     font-size: 13px;
     white-space: nowrap;
   }
-  .site-header > .button svg {
+  .header-actions > .button svg {
     width: 20px;
+  }
+  .header-actions > .button {
+    width: 48px;
+    padding: 0;
+  }
+  .header-actions > .button span {
+    display: none;
+  }
+  .header-phone {
+    width: 48px;
+    min-height: 48px;
   }
   .menu-toggle {
     order: 3;
@@ -1242,12 +1356,28 @@ footer p:last-child {
     z-index: 3;
     inset: auto;
   }
+  .access-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 8px;
+  }
   .button-hero {
     min-width: 0;
     width: 100%;
-    min-height: 62px;
-    padding: 0 16px;
-    font-size: 15px;
+    min-height: 68px;
+    padding: 0 10px;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .button-hero svg {
+    width: 20px;
+    flex: 0 0 20px;
+  }
+  .button-hero small {
+    font-size: 8px;
+  }
+  .button-hero .arrow {
+    display: none;
   }
   .text-link {
     justify-content: center;
@@ -1329,8 +1459,13 @@ footer p:last-child {
     padding: 65px 22px;
   }
   .final-cta .button {
-    margin-top: 35px;
+    margin-top: 0;
     width: 100%;
+  }
+  .final-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 35px;
   }
   footer {
     grid-template-columns: 1fr;
@@ -1372,11 +1507,15 @@ footer p:last-child {
   .brand-mark {
     width: 42px;
   }
-  .site-header > .button {
+  .header-actions > .button {
     min-height: 44px;
     padding: 0 10px;
     font-size: 11px;
     gap: 7px;
+  }
+  .header-phone {
+    width: 44px;
+    min-height: 44px;
   }
   .menu-toggle {
     flex-basis: 44px;

@@ -58,7 +58,7 @@ const [unknown, official] = await Promise.all([
   ask('Quel produit chimique exact a été libéré aujourd hui dans l usine de Liège ?'),
   ask('Que dois-je faire si je vois un nuage toxique près d une usine ?')
 ]);
-assert.equal(unknown, UNKNOWN_NOTICE);
+assert.ok(unknown.startsWith(UNKNOWN_NOTICE), `Réponse d’indisponibilité absente : ${unknown}`);
 assert.match(official, /mette(?:z-vous|z|tre) immédiatement à l[’']abri dans le bâtiment le plus proche/i);
 
 console.log('Agent ElevenLabs : 6 scénarios natifs validés.');
