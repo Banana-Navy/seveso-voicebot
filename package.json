@@ -12,6 +12,7 @@
     "test:agent-live": "node tests/elevenlabs-policy-live.mjs",
     "test:agent-config": "node tests/elevenlabs-config-live.mjs",
     "test:agent-seveso": "node tests/elevenlabs-seveso-live.mjs",
+    "test:agent-fallback": "node tests/elevenlabs-tool-fallback-live.mjs",
     "sync:agent": "node scripts/sync-elevenlabs-agent.mjs"
   },
   "dependencies": {

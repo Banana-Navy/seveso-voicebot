@@ -25,6 +25,7 @@ Tests de l’agent :
 - `npm run test:agent-config` : configuration réellement déployée ;
 - `npm run test:agent-live` : langue, urgence et consignes officielles ;
 - `npm run test:agent-seveso` : synonymes, six scénarios, extraction multi-informations et latence de réponse.
+- `npm run test:agent-fallback` : absence de retry et de `call_id` vide lorsqu’un connecteur métier échoue.
 
 ## Téléphonie
 
