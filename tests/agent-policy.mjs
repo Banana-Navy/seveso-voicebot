@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { CRITICAL_DISTRESS, NON_FRENCH_INPUT, NON_FRENCH_NOTICE } from '../src/agent-policy.js';
 
 const agentPrompt = await readFile(new URL('../config/elevenlabs-agent-prompt.md', import.meta.url), 'utf8');
+const settings = JSON.parse(await readFile(new URL('../config/elevenlabs-agent-settings.json', import.meta.url), 'utf8'));
 
 for (const phrase of [
   'Je m étouffe',
@@ -23,11 +24,26 @@ for (const phrase of [
   assert.equal(CRITICAL_DISTRESS.test(phrase), false, `Faux positif : ${phrase}`);
 }
 
-assert.match(agentPrompt, /Réponds uniquement en français/);
-assert.match(agentPrompt, /ne peut pas appeler ni transférer réellement/i);
-assert.match(agentPrompt, new RegExp(NON_FRENCH_NOTICE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+assert.match(agentPrompt, /exclusivement en français/i);
+assert.match(agentPrompt, /ne transfère pas l’appel/i);
+assert.match(agentPrompt, /classify_situation/);
+assert.match(agentPrompt, /ne redemande jamais une information déjà donnée/i);
+assert.match(agentPrompt, /persons_count=2/);
+for (const scenario of ['explosion', 'industrial_fire', 'toxic_cloud', 'environmental_pollution', 'preventive_evacuation', 'undetermined']) {
+  assert.match(agentPrompt, new RegExp(`\\b${scenario}\\b`), `Scénario absent du prompt : ${scenario}`);
+}
+assert.match(settings.first_message, /Voicebot SEVESO/);
+assert.match(settings.first_message, /version de démonstration/);
+assert.match(settings.first_message, /incidents industriels/);
+assert.match(settings.first_message, /enregistré/);
+assert.match(settings.first_message, /Pour quelle situation appelez-vous/);
+assert.equal(settings.voice.locale, 'fr-BE');
+assert.equal(settings.voice.model_id, 'eleven_flash_v2_5');
+assert.equal(settings.vad.background_voice_detection, false);
+assert.equal(settings.turn.transcribe_on_disabled_interruptions, false);
+assert.ok(settings.turn.interruption_ignore_terms.includes('euh'));
 assert.equal(NON_FRENCH_INPUT.test('Hello, can you help me in English?'), true);
 assert.equal(NON_FRENCH_INPUT.test('Hallo, help mij alsjeblieft'), true);
 assert.equal(NON_FRENCH_INPUT.test('Bonjour, pouvez-vous m’aider ?'), false);
 
-console.log('Politique agent : langue, urgence et faux positifs validés.');
+console.log('Politique agent : ouverture, scénarios, extraction, langue, urgence et bruit validés.');

@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "test:distress": "node tests/distress-api.mjs",
     "test:policy": "node tests/agent-policy.mjs",
-    "test:agent-live": "node tests/elevenlabs-policy-live.mjs"
+    "test:agent-live": "node tests/elevenlabs-policy-live.mjs",
+    "test:agent-config": "node tests/elevenlabs-config-live.mjs",
+    "test:agent-seveso": "node tests/elevenlabs-seveso-live.mjs",
+    "sync:agent": "node scripts/sync-elevenlabs-agent.mjs"
   },
   "dependencies": {
     "@elevenlabs/client": "1.12.0",

@@ -1,0 +1,44 @@
+{
+  "agent_id": "agent_3401kvqnemkfev98yj4xq64tg1xn",
+  "first_message": "Bonjour, vous êtes avec le Voicebot SEVESO, une version de démonstration dédiée aux incidents industriels. Cet appel peut être enregistré pour entraîner, évaluer et améliorer le système. Pour quelle situation appelez-vous : une explosion, un incendie, une fuite ou un nuage toxique, une pollution, une évacuation préventive, ou autre chose ?",
+  "voice": {
+    "name": "Adrien",
+    "voice_id": "IpTJxgMFj1wbxpha4zxm",
+    "locale": "fr-BE",
+    "model_id": "eleven_flash_v2_5",
+    "stability": 0.58,
+    "similarity_boost": 0.82,
+    "speed": 0.94,
+    "optimize_streaming_latency": 3
+  },
+  "turn": {
+    "turn_model": "turn_v3",
+    "turn_eagerness": "normal",
+    "turn_timeout": 8,
+    "interruption_ignore_terms": ["euh", "heu", "hum", "hmm", "mmh", "ah"],
+    "interruption_ignore_term_languages": ["fr"],
+    "merge_with_default_ignore_terms": true,
+    "transcribe_on_disabled_interruptions": false
+  },
+  "vad": {
+    "background_voice_detection": false
+  },
+  "asr_keywords": [
+    "SEVESO",
+    "BE-Alert",
+    "112",
+    "explosion",
+    "détonation",
+    "déflagration",
+    "incendie industriel",
+    "fuite de gaz",
+    "nuage toxique",
+    "rejet chimique",
+    "pollution environnementale",
+    "évacuation préventive",
+    "étouffement",
+    "suffocation",
+    "inconscient",
+    "perte de connaissance"
+  ]
+}

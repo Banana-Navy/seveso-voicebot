@@ -8,6 +8,7 @@ const diagnostics = [];
 let resolveResponse;
 const responseReceived = new Promise((resolve) => { resolveResponse = resolve; });
 let testing = false;
+let conversationId = null;
 
 const conversation = await Conversation.startSession({
   agentId: AGENT_ID,
@@ -22,10 +23,13 @@ const conversation = await Conversation.startSession({
     multilingual_enabled: false,
     emergency_transfer_enabled: false
   },
+  onConnect: ({ conversationId: id }) => { conversationId = id; },
   onMessage: (message) => {
     messages.push(message);
     if (testing && message.role === 'agent') resolveResponse(message.message);
   },
+  onAgentToolRequest: (event) => diagnostics.push({ type: 'tool_request', event }),
+  onAgentToolResponse: (event) => diagnostics.push({ type: 'tool_response', event }),
   onGuardrailTriggered: (event) => diagnostics.push({ type: 'guardrail', event }),
   onError: (message, context) => diagnostics.push({ type: 'error', message: String(message), context }),
   onDisconnect: (details) => diagnostics.push({ type: 'disconnect', details })
@@ -44,5 +48,5 @@ await Promise.race([
   conversation.endSession().catch(() => {}),
   new Promise((resolve) => setTimeout(resolve, 3000))
 ]);
-console.log(JSON.stringify({ prompt, response, messages, diagnostics }, null, 2));
+console.log(JSON.stringify({ conversationId, prompt, response, messages, diagnostics }, null, 2));
 process.exit(response ? 0 : 1);
