@@ -2,13 +2,13 @@
   "agent_id": "agent_3401kvqnemkfev98yj4xq64tg1xn",
   "first_message": "Bonjour, vous êtes avec le Voicebot SEVESO, une version de démonstration dédiée aux incidents industriels. Cet appel peut être enregistré pour entraîner, évaluer et améliorer le système. Pour quelle situation appelez-vous : une explosion, un incendie, une fuite ou un nuage toxique, une pollution, une évacuation préventive, ou autre chose ?",
   "voice": {
-    "name": "Christophe Géradon",
-    "voice_id": "HDc7042zGcc1SdpT2m1U",
+    "name": "Paul French",
+    "voice_id": "cTNP6ZM2mLTKj2BFhxEh",
     "locale": "fr-BE",
     "model_id": "eleven_v3_conversational",
-    "stability": 0.38,
-    "similarity_boost": 0.72,
-    "speed": 0.99,
+    "stability": 0.32,
+    "similarity_boost": 0.7,
+    "speed": 1.03,
     "optimize_streaming_latency": 3
   },
   "active_tool_ids": [],
