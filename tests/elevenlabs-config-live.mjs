@@ -28,6 +28,8 @@ assert.equal(config.tts.speed, settings.voice.speed);
 assert.equal(config.tts.stability, settings.voice.stability);
 assert.equal(config.tts.expressive_mode, true);
 assert.deepEqual(config.agent.prompt.tool_ids, settings.active_tool_ids);
+assert.match(config.agent.prompt.built_in_tools.end_call.description, /SEVESO_log_call_end/);
+assert.match(config.agent.prompt.built_in_tools.end_call.description, /Ne promets jamais une transmission ou un rappel/);
 
 for (const required of ['Voicebot SEVESO', 'version de démonstration', 'incidents industriels', 'enregistré', 'Pour quelle situation appelez-vous']) {
   assert.ok(config.agent.first_message.includes(required), `Introduction incomplète : ${required}`);

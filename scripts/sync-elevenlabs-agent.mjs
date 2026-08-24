@@ -6,6 +6,15 @@ if (!apiKey) throw new Error('ELEVENLABS_API_KEY est absent.');
 const settings = JSON.parse(await readFile(new URL('../config/elevenlabs-agent-settings.json', import.meta.url), 'utf8'));
 const prompt = await readFile(new URL('../config/elevenlabs-agent-prompt.md', import.meta.url), 'utf8');
 
+const currentResponse = await fetch(`https://api.elevenlabs.io/v1/convai/agents/${settings.agent_id}`, {
+  headers: { 'xi-api-key': apiKey }
+});
+const currentAgent = await currentResponse.json();
+if (!currentResponse.ok) throw new Error(`Lecture ElevenLabs refusée (${currentResponse.status}) : ${JSON.stringify(currentAgent)}`);
+const builtInTools = currentAgent.conversation_config.agent.prompt.built_in_tools;
+const endCallTool = builtInTools?.end_call;
+if (!endCallTool) throw new Error('Outil système end_call introuvable.');
+
 const response = await fetch(`https://api.elevenlabs.io/v1/convai/agents/${settings.agent_id}`, {
   method: 'PATCH',
   headers: {
@@ -33,7 +42,14 @@ const response = await fetch(`https://api.elevenlabs.io/v1/convai/agents/${setti
         disable_first_message_interruptions: true,
         prompt: {
           prompt,
-          tool_ids: settings.active_tool_ids
+          tool_ids: settings.active_tool_ids,
+          built_in_tools: {
+            ...builtInTools,
+            end_call: {
+              ...endCallTool,
+              description: "Termine et raccroche uniquement lorsque l’échange est clairement clos ou à la demande de l’appelant. Prononce d’abord une clôture humaine qui confirme la prise en compte pendant l’échange, rappelle la consigne immédiate et indique d’appeler le 112 en cas de danger. En mode actif, appelle SEVESO_log_call_end avant de raccrocher. Ne promets jamais une transmission ou un rappel sans confirmation d’un outil."
+            }
+          }
         }
       }
     }
