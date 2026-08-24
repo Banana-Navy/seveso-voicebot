@@ -289,6 +289,50 @@ const observer = new IntersectionObserver((entries) => {
 }, { rootMargin: '-30% 0px -60%' });
 sections.forEach((section) => observer.observe(section));
 
+function initCursorBentos() {
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!finePointer.matches || reducedMotion.matches) return;
+
+  const bentos = [...document.querySelectorAll('.feature-grid article, .architecture-flow article, .protection-grid article, .tech-stack li, .faq details')];
+
+  bentos.forEach((bento) => {
+    bento.classList.add('cursor-bento');
+    let frame = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+
+    const render = () => {
+      const rect = bento.getBoundingClientRect();
+      const x = Math.max(0, Math.min(rect.width, pointerX - rect.left));
+      const y = Math.max(0, Math.min(rect.height, pointerY - rect.top));
+      const normalizedX = rect.width ? x / rect.width - 0.5 : 0;
+      const normalizedY = rect.height ? y / rect.height - 0.5 : 0;
+      bento.style.setProperty('--cursor-x', normalizedX.toFixed(3));
+      bento.style.setProperty('--cursor-y', normalizedY.toFixed(3));
+      bento.style.setProperty('--cursor-light-x', `${x.toFixed(1)}px`);
+      bento.style.setProperty('--cursor-light-y', `${y.toFixed(1)}px`);
+      frame = 0;
+    };
+
+    bento.addEventListener('pointerenter', () => bento.classList.add('is-cursor-hovered'));
+    bento.addEventListener('pointermove', (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (!frame) frame = requestAnimationFrame(render);
+    });
+    bento.addEventListener('pointerleave', () => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      bento.classList.remove('is-cursor-hovered');
+      bento.style.setProperty('--cursor-x', '0');
+      bento.style.setProperty('--cursor-y', '0');
+      bento.style.setProperty('--cursor-light-x', '50%');
+      bento.style.setProperty('--cursor-light-y', '50%');
+    });
+  });
+}
+
 function initMotion() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -351,3 +395,4 @@ function initMotion() {
 }
 
 initMotion();
+initCursorBentos();

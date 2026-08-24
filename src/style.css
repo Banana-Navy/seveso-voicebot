@@ -1126,12 +1126,47 @@ footer p:last-child {
     box-shadow 0.25s ease,
     border-color 0.25s ease;
 }
-.feature-grid article:hover,
-.architecture-flow article:hover,
-.protection-grid article:hover,
-.tech-stack li:hover {
-  transform: translateY(-5px);
+.cursor-bento {
+  --cursor-x: 0;
+  --cursor-y: 0;
+  --cursor-light-x: 50%;
+  --cursor-light-y: 50%;
+  isolation: isolate;
+  position: relative;
+  translate: 0 0;
+  scale: 1;
+  transition:
+    translate 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s ease,
+    border-color 0.32s ease;
+}
+.cursor-bento::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 180px at var(--cursor-light-x) var(--cursor-light-y),
+    rgba(255, 255, 255, 0.3),
+    rgba(174, 202, 165, 0.1) 38%,
+    transparent 72%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+.cursor-bento.is-cursor-hovered {
+  translate:
+    calc(var(--cursor-x) * 7px)
+    calc(-5px + var(--cursor-y) * 5px);
+  scale: 1.012;
   box-shadow: 0 18px 38px rgba(25, 42, 34, 0.14);
+  border-color: rgba(120, 153, 117, 0.34);
+}
+.cursor-bento.is-cursor-hovered::after {
+  opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1145,6 +1180,22 @@ footer p:last-child {
   .hero-art,
   .hero-art-mobile {
     transform: none !important;
+  }
+  .cursor-bento {
+    translate: none !important;
+    scale: none !important;
+  }
+  .cursor-bento::after {
+    display: none !important;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-bento {
+    translate: none !important;
+    scale: none !important;
+  }
+  .cursor-bento::after {
+    display: none;
   }
 }
 @media (max-width: 1320px) {
