@@ -17,7 +17,7 @@ Le navigateur soumet en parallèle chaque transcription utilisateur et des métr
 
 Les paramètres de langue, le prompt, les mots-clés ASR et la base documentaire sont configurés directement sur l'agent ElevenLabs. Le navigateur ne remplace pas cette politique. Les guardrails Focus et Manipulation sont activés sur l'agent.
 
-La configuration reproductible de l’agent est décrite dans `config/elevenlabs-agent-settings.json` et synchronisée avec `npm run sync:agent`. L’ouverture SEVESO et la question de qualification constituent le premier message non interruptible. Après ce message, le turn-taking `turn_v3` reprend avec interruptions autorisées, filtrage des hésitations brèves et détection de voix de fond désactivée. La qualification libre est ensuite routée vers les six scénarios existants via `classify_situation`.
+La configuration reproductible de l’agent est décrite dans `config/elevenlabs-agent-settings.json` et synchronisée avec `npm run sync:agent`. Les outils métier sont renommés avec `npm run sync:tool-names` et portent tous le préfixe `SEVESO_`; leurs IDs, schémas et URLs restent inchangés. L’ouverture SEVESO et la question de qualification constituent le premier message non interruptible. Après ce message, le turn-taking `turn_v3` reprend avec interruptions autorisées, filtrage des hésitations brèves et détection de voix de fond désactivée. La qualification libre est ensuite routée vers les six scénarios existants via `SEVESO_classify_situation`.
 
 Tests de l’agent :
 

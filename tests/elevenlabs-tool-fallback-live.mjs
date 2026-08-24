@@ -50,7 +50,7 @@ const detail = await fetch(`https://api.elevenlabs.io/v1/convai/conversations/${
 }).then((response) => response.json());
 const history = JSON.parse(detail.conversation_initiation_client_data.dynamic_variables.system__conversation_history);
 const calls = history.entries.flatMap((entry) => entry.tool_requests ?? []);
-const brokenWebhookCalls = calls.filter((call) => ['classify_situation', 'save_triage', 'save_location', 'save_symptom', 'save_assistance', 'update_confinement', 'request_transfer', 'log_call_end'].includes(call.tool_name));
+const brokenWebhookCalls = calls.filter((call) => ['SEVESO_classify_situation', 'SEVESO_save_triage', 'SEVESO_save_location', 'SEVESO_save_symptom', 'SEVESO_save_assistance', 'SEVESO_update_confinement', 'SEVESO_request_transfer', 'SEVESO_log_call_end'].includes(call.tool_name));
 
 assert.equal(brokenWebhookCalls.length, 0, 'Aucun webhook n8n défaillant ne doit être appelé en mode dégradé.');
 assert.equal(JSON.stringify(calls).includes('"call_id":""'), false, 'Un call_id vide a été transmis.');

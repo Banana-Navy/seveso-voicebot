@@ -13,7 +13,8 @@
     "test:agent-config": "node tests/elevenlabs-config-live.mjs",
     "test:agent-seveso": "node tests/elevenlabs-seveso-live.mjs",
     "test:agent-fallback": "node tests/elevenlabs-tool-fallback-live.mjs",
-    "sync:agent": "node scripts/sync-elevenlabs-agent.mjs"
+    "sync:agent": "node scripts/sync-elevenlabs-agent.mjs",
+    "sync:tool-names": "node scripts/prefix-elevenlabs-tools.mjs"
   },
   "dependencies": {
     "@elevenlabs/client": "1.12.0",

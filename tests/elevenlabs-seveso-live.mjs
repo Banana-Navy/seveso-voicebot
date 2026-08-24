@@ -63,7 +63,7 @@ async function runCase(expectedScenario, prompt) {
   const detail = await detailResponse.json();
   const history = JSON.parse(detail.conversation_initiation_client_data.dynamic_variables.system__conversation_history);
   const calls = history.entries.flatMap((entry) => entry.tool_requests ?? []);
-  const brokenWebhookCalls = calls.filter((call) => ['classify_situation', 'save_triage', 'save_location', 'save_symptom', 'save_assistance', 'update_confinement', 'request_transfer', 'log_call_end'].includes(call.tool_name));
+  const brokenWebhookCalls = calls.filter((call) => ['SEVESO_classify_situation', 'SEVESO_save_triage', 'SEVESO_save_location', 'SEVESO_save_symptom', 'SEVESO_save_assistance', 'SEVESO_update_confinement', 'SEVESO_request_transfer', 'SEVESO_log_call_end'].includes(call.tool_name));
   assert.equal(brokenWebhookCalls.length, 0, `Webhook défaillant appelé pour : ${prompt}`);
   assert.doesNotMatch(response, /problème technique|souci.*enregistr/i, `Erreur technique annoncée pour : ${prompt}`);
   assert.doesNotMatch(response, /quelle situation|s'agit-il d'une explosion, d'un incendie/i, `Incident redemandé pour : ${prompt}`);

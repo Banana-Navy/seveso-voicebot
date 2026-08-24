@@ -26,7 +26,10 @@ for (const phrase of [
 
 assert.match(agentPrompt, /exclusivement en français/i);
 assert.match(agentPrompt, /ne transfère pas l’appel/i);
-assert.match(agentPrompt, /classify_situation/);
+assert.match(agentPrompt, /SEVESO_classify_situation/);
+for (const toolName of ['SEVESO_save_triage', 'SEVESO_save_location', 'SEVESO_save_symptom', 'SEVESO_save_assistance', 'SEVESO_update_confinement', 'SEVESO_request_transfer', 'SEVESO_log_call_end']) {
+  assert.match(agentPrompt, new RegExp(`\\b${toolName}\\b`), `Outil absent du prompt : ${toolName}`);
+}
 assert.match(agentPrompt, /ne redemande jamais une information déjà donnée/i);
 assert.match(agentPrompt, /persons_count=2/);
 for (const scenario of ['explosion', 'industrial_fire', 'toxic_cloud', 'environmental_pollution', 'preventive_evacuation', 'undetermined']) {
