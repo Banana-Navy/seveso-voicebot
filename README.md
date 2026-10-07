@@ -1,5 +1,14 @@
 # Voicebot SEVESO
 
+## Ouverture sur Windows
+
+Ne pas ouvrir directement `index.html` avec une adresse `file:///…`. Windows et Edge bloquent les modules JavaScript locaux et résolvent certains médias depuis la racine du disque.
+
+- Pour consulter la version publiée : <https://banana-navy.github.io/seveso-voicebot/>.
+- Pour travailler localement sous Windows : double-cliquer sur `start-windows.cmd`. Le script démarre Vite sur `http://127.0.0.1:5173/` et ouvre le navigateur. Si Node.js n’est pas installé, il ouvre automatiquement la version publiée.
+
+Toute ouverture directe de `index.html` redirige désormais automatiquement vers la version publiée.
+
 Landing page et démonstration vocale en français pour Seveso Voice, assistant d'aide à la population en situation de crise industrielle.
 
 ## Développement
