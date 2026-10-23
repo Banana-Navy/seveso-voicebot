@@ -48,6 +48,8 @@ assert.match(agentPrompt, /Ne dis jamais qu’il existe un problème technique/)
 assert.match(agentPrompt, /Clôture naturelle et honnête/);
 assert.match(agentPrompt, /Ne promets jamais un rappel/);
 assert.match(agentPrompt, /Prenez soin de vous/);
+assert.match(agentPrompt, /prononce toujours \*\*BE-Alert\*\* « bi Alert »/);
+assert.match(agentPrompt, /écris exactement « bi Alert »/);
 assert.equal(settings.vad.background_voice_detection, false);
 assert.equal(settings.turn.transcribe_on_disabled_interruptions, false);
 assert.ok(settings.turn.interruption_ignore_terms.includes('euh'));

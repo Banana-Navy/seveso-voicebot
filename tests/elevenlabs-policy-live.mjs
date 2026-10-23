@@ -4,7 +4,7 @@ import { NON_FRENCH_NOTICE } from '../src/agent-policy.js';
 
 const AGENT_ID = 'agent_3401kvqnemkfev98yj4xq64tg1xn';
 const EMERGENCY_NOTICE = 'Votre état peut être grave. Raccrochez maintenant et appelez immédiatement le 112, ou demandez à une personne près de vous de le faire. Cette démonstration ne peut pas transférer l’appel.';
-const UNKNOWN_NOTICE = 'Je ne dispose pas d’une information officielle vérifiée pour répondre à cette question. Consultez les autorités, BE-Alert ou appelez le 112 si une personne est en danger.';
+const UNKNOWN_NOTICE = 'Je ne dispose pas d’une information officielle vérifiée pour répondre à cette question. Consultez les autorités, bi Alert, ou appelez le 112 si une personne est en danger.';
 
 async function ask(prompt) {
   let testing = false;

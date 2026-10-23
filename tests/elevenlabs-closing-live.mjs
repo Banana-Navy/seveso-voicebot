@@ -39,7 +39,8 @@ await conversation.endSession().catch(() => {});
 
 const closing = agentMessages.at(-1);
 assert.match(closing, /pris en compte|bien noté/i);
-assert.match(closing, /BE-Alert|112|consignes officielles/i);
+assert.match(closing, /bi[ -]?Alert|112|consignes officielles/i);
+assert.doesNotMatch(closing, /\bBE-Alert\b/i, 'Le texte TTS ne doit pas provoquer la prononciation « bé Alert ».');
 assert.match(closing, /Prenez soin de vous|Au revoir/i);
 assert.doesNotMatch(closing, /transmis|rappel|recontact/i);
 
