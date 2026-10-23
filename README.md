@@ -38,7 +38,7 @@ Tests de l’agent :
 
 ## Téléphonie
 
-- Numéro public : [`+32 71 49 10 86`](tel:+3271491086)
+- Numéro public : [`+32 71 49 61 80`](tel:+3271496180)
 - Fournisseur : Twilio via l'intégration native ElevenLabs
 - Ressource ElevenLabs : `phnum_9001kqa48jahf38ayg5ak67c7gec`
 - Routage entrant : agent SEVESO `agent_3401kvqnemkfev98yj4xq64tg1xn`, branche `agtbrch_1201kvqnen6zet9va46mxxs0e2pe`
