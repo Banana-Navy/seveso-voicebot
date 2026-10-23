@@ -517,6 +517,12 @@ button {
   border-radius: 10px;
   object-fit: cover;
 }
+.architecture-flow #tech-entry i img,
+.architecture-flow #tech-api i img,
+.tech-links img[src$="api-systems.webp"] {
+  object-fit: contain;
+  object-position: center;
+}
 .architecture-flow h3,
 .protection-grid h3 {
   font: 700 20px "Manrope", sans-serif;
