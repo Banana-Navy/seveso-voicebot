@@ -11,7 +11,9 @@
     "speed": 1.03,
     "optimize_streaming_latency": 3
   },
-  "active_tool_ids": [],
+  "active_tool_ids": [
+    "tool_1001m5kyge6cfskrk1a0mh6r0q3g"
+  ],
   "turn": {
     "turn_model": "turn_v3",
     "turn_eagerness": "normal",

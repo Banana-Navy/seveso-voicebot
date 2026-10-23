@@ -51,8 +51,10 @@ const detail = await fetch(`https://api.elevenlabs.io/v1/convai/conversations/${
 const history = JSON.parse(detail.conversation_initiation_client_data.dynamic_variables.system__conversation_history);
 const calls = history.entries.flatMap((entry) => entry.tool_requests ?? []);
 const brokenWebhookCalls = calls.filter((call) => ['SEVESO_classify_situation', 'SEVESO_save_triage', 'SEVESO_save_location', 'SEVESO_save_symptom', 'SEVESO_save_assistance', 'SEVESO_update_confinement', 'SEVESO_request_transfer', 'SEVESO_log_call_end'].includes(call.tool_name));
+const unjustifiedAddressCalls = calls.filter((call) => call.tool_name === 'SEVESO_resolve_belgian_address');
 
 assert.equal(brokenWebhookCalls.length, 0, 'Aucun webhook n8n défaillant ne doit être appelé en mode dégradé.');
+assert.equal(unjustifiedAddressCalls.length, 0, 'Une localisation vague sans rue explicite ne doit pas déclencher le résolveur d’adresse.');
 assert.equal(JSON.stringify(calls).includes('"call_id":""'), false, 'Un call_id vide a été transmis.');
 assert.equal(agentMessages.some((message) => /problème technique|souci.*enregistr/i.test(message)), false, 'Le bot ne doit pas annoncer les erreurs de journalisation.');
 

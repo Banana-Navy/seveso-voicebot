@@ -1,0 +1,9 @@
+{
+  "supabase_project_id": "xqaydfqzhaqksappexdg",
+  "edge_function": "resolve-belgian-address",
+  "elevenlabs_tool_id": "tool_1001m5kyge6cfskrk1a0mh6r0q3g",
+  "elevenlabs_tool_name": "SEVESO_resolve_belgian_address",
+  "api_client_label": "seveso-address-resolver",
+  "scope": "resolve:address",
+  "token_expires_at": "2027-10-23T23:59:59Z"
+}

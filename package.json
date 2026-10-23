@@ -14,6 +14,7 @@
     "test:agent-seveso": "node tests/elevenlabs-seveso-live.mjs",
     "test:agent-fallback": "node tests/elevenlabs-tool-fallback-live.mjs",
     "test:agent-closing": "node tests/elevenlabs-closing-live.mjs",
+    "test:agent-address": "node tests/elevenlabs-address-live.mjs",
     "sync:agent": "node scripts/sync-elevenlabs-agent.mjs",
     "sync:tool-names": "node scripts/prefix-elevenlabs-tools.mjs"
   },
